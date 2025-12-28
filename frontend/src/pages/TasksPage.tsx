@@ -84,20 +84,17 @@ export default function TasksPage() {
   console.log('📋 TasksPage: Returning JSX now')
   
   return (
-    <div className="tasks-page" data-testid="tasks-page">
-      {/* Debug test element */}
-      <div style={{
-        position: 'fixed',
-        top: '10px',
-        left: '10px',
-        background: 'red',
-        color: 'white',
-        padding: '5px',
-        zIndex: 99999,
-        fontSize: '12px'
-      }}>
-        TEST: TasksPage rendered
-      </div>
+    <div 
+      className="tasks-page" 
+      data-testid="tasks-page"
+      style={{
+        display: 'block',
+        visibility: 'visible',
+        opacity: 1,
+        width: '100%',
+        minHeight: '100vh',
+      }}
+    >
       
       <div className="page-header">
         <button

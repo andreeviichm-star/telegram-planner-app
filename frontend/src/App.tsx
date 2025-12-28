@@ -9,7 +9,7 @@ import BudgetPage from './pages/BudgetPage'
 import './App.css'
 
 // TEST: Use simple version to check if complex components cause issues
-const USE_SIMPLE_VERSION = true // Set to true to test simple version
+const USE_SIMPLE_VERSION = false // Set to true to test simple version
 
 // Initialize Telegram WebApp outside of component to avoid initialization issues
 if (typeof window !== 'undefined') {
@@ -83,9 +83,13 @@ function App() {
   console.log('🧪 USE_SIMPLE_VERSION:', USE_SIMPLE_VERSION)
   
   if (USE_SIMPLE_VERSION) {
-    console.log('🧪 Using SIMPLE version for testing - WITHOUT Layout')
-    // Test: Render directly without Layout to see if Layout is the problem
-    return <TasksPageSimple />
+    console.log('🧪 Using SIMPLE version for testing - WITH Layout')
+    // Test: Now with Layout to see if it works
+    return (
+      <Layout>
+        <TasksPageSimple />
+      </Layout>
+    )
   }
   
   console.log('🧪 Using FULL version')
