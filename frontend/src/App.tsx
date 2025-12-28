@@ -81,34 +81,53 @@ function App() {
     console.log('🔗 Pathname:', window.location.pathname)
   }, [])
 
-  // TEST: Render TasksPage directly without router to check if router is the issue
-  // If this works, the problem is with HashRouter in Telegram
-  console.log('🧪 Testing: Rendering TasksPage directly without router')
+  // Render with HashRouter - needed for navigation in components like BudgetWidget
   console.log('🧪 VERSION:', VERSION)
   
   if (VERSION === 'simple') {
     console.log('🧪 Using SIMPLE version')
     return (
-      <Layout>
-        <TasksPageSimple />
-      </Layout>
+      <HashRouter>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<TasksPageSimple />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/meetings" element={<MeetingsPage />} />
+            <Route path="/budget" element={<BudgetPage />} />
+          </Routes>
+        </Layout>
+      </HashRouter>
     )
   }
   
   if (VERSION === 'progressive') {
-    console.log('🧪 Using PROGRESSIVE version (stats + tasks list, no complex components)')
+    console.log('🧪 Using PROGRESSIVE version')
     return (
-      <Layout>
-        <TasksPageProgressive />
-      </Layout>
+      <HashRouter>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<TasksPageProgressive />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/meetings" element={<MeetingsPage />} />
+            <Route path="/budget" element={<BudgetPage />} />
+          </Routes>
+        </Layout>
+      </HashRouter>
     )
   }
   
   console.log('🧪 Using FULL version')
   return (
-    <Layout>
-      <TasksPage />
-    </Layout>
+    <HashRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<TasksPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/meetings" element={<MeetingsPage />} />
+          <Route path="/budget" element={<BudgetPage />} />
+        </Routes>
+      </Layout>
+    </HashRouter>
   )
 
   // Original code with router (commented out for testing)
