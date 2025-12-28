@@ -22,10 +22,32 @@ if (!rootElement) {
     </div>
   `
 } else {
+  // Debug: log before render
+  console.log('🚀 Starting React render...', {
+    rootElement: rootElement,
+    hasChildren: rootElement.children.length,
+  })
+  
   try {
     ReactDOM.createRoot(rootElement).render(<App />)
+    console.log('✅ React app rendered successfully')
+    
+    // Debug: check after render
+    setTimeout(() => {
+      const layout = document.querySelector('.layout')
+      const mainContent = document.querySelector('.main-content')
+      const tasksPage = document.querySelector('.tasks-page')
+      console.log('🔍 After render check:', {
+        layout: !!layout,
+        mainContent: !!mainContent,
+        tasksPage: !!tasksPage,
+        rootChildren: rootElement.children.length,
+        layoutDisplay: layout ? window.getComputedStyle(layout).display : 'N/A',
+        layoutVisibility: layout ? window.getComputedStyle(layout).visibility : 'N/A',
+      })
+    }, 500)
   } catch (error) {
-    console.error('Failed to render React app:', error)
+    console.error('❌ Failed to render React app:', error)
     rootElement.innerHTML = `
       <div style="
         padding: 20px; 

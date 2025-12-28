@@ -13,6 +13,10 @@ import './TasksPage.css'
 export default function TasksPage() {
   const location = useLocation()
   const [tasks, setTasks] = useState<Task[]>([])
+  
+  useEffect(() => {
+    console.log('📋 TasksPage mounted')
+  }, [])
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
@@ -83,6 +87,19 @@ export default function TasksPage() {
 
   return (
     <div className="tasks-page">
+      {/* Debug test element */}
+      <div style={{
+        position: 'fixed',
+        top: '10px',
+        left: '10px',
+        background: 'red',
+        color: 'white',
+        padding: '5px',
+        zIndex: 99999,
+        fontSize: '12px'
+      }}>
+        TEST: TasksPage rendered
+      </div>
       <div className="page-header">
         <button
           className="menu-btn glass-light"

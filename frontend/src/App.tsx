@@ -42,28 +42,28 @@ if (typeof window !== 'undefined') {
 
 function App() {
   useEffect(() => {
-    // Global error handlers (only in development)
-    if (import.meta.env.DEV) {
-      const handleError = (event: ErrorEvent) => {
-        console.error('Resource loading error:', {
-          message: event.message,
-          filename: event.filename,
-          lineno: event.lineno,
-          colno: event.colno,
-        })
-      }
+    console.log('⚛️ App component mounted')
+    
+    // Global error handlers
+    const handleError = (event: ErrorEvent) => {
+      console.error('❌ Resource loading error:', {
+        message: event.message,
+        filename: event.filename,
+        lineno: event.lineno,
+        colno: event.colno,
+      })
+    }
 
-      const handleRejection = (event: PromiseRejectionEvent) => {
-        console.error('Unhandled promise rejection:', event.reason)
-      }
+    const handleRejection = (event: PromiseRejectionEvent) => {
+      console.error('❌ Unhandled promise rejection:', event.reason)
+    }
 
-      window.addEventListener('error', handleError, true)
-      window.addEventListener('unhandledrejection', handleRejection)
+    window.addEventListener('error', handleError, true)
+    window.addEventListener('unhandledrejection', handleRejection)
 
-      return () => {
-        window.removeEventListener('error', handleError, true)
-        window.removeEventListener('unhandledrejection', handleRejection)
-      }
+    return () => {
+      window.removeEventListener('error', handleError, true)
+      window.removeEventListener('unhandledrejection', handleRejection)
     }
   }, [])
 
