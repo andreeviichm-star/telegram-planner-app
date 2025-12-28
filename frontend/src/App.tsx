@@ -24,17 +24,27 @@ declare global {
 function App() {
   useEffect(() => {
     // Используем Telegram WebApp API напрямую
-    try {
-      if (window.Telegram?.WebApp) {
-        const tg = window.Telegram.WebApp
-        tg.ready()
-        tg.expand()
-        tg.setHeaderColor('#0a0e27')
-        tg.setBackgroundColor('#0a0e27')
+    const initTelegram = () => {
+      try {
+        // Ждем загрузки Telegram WebApp скрипта
+        if (window.Telegram?.WebApp) {
+          const tg = window.Telegram.WebApp
+          tg.ready()
+          tg.expand()
+          tg.setHeaderColor('#0a0e27')
+          tg.setBackgroundColor('#0a0e27')
+          console.log('Telegram WebApp initialized')
+        } else {
+          // Если скрипт еще не загружен, ждем
+          setTimeout(initTelegram, 100)
+        }
+      } catch (error) {
+        console.error('Telegram WebApp error:', error)
+        // Приложение все равно должно работать без Telegram API
       }
-    } catch (error) {
-      console.error('Telegram WebApp error:', error)
     }
+    
+    initTelegram()
   }, [])
 
   return (
