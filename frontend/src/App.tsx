@@ -3,13 +3,17 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import TasksPage from './pages/TasksPage'
 import TasksPageSimple from './pages/TasksPageSimple'
+import TasksPageProgressive from './pages/TasksPageProgressive'
 import CalendarPage from './pages/CalendarPage'
 import MeetingsPage from './pages/MeetingsPage'
 import BudgetPage from './pages/BudgetPage'
 import './App.css'
 
-// TEST: Use simple version to check if complex components cause issues
-const USE_SIMPLE_VERSION = false // Set to true to test simple version
+// TEST: Use different versions to find the problematic component
+// 'simple' - minimal version
+// 'progressive' - with stats and tasks list, but without complex components
+// 'full' - full version with all components
+const VERSION = 'progressive' // 'simple' | 'progressive' | 'full'
 
 // Initialize Telegram WebApp outside of component to avoid initialization issues
 if (typeof window !== 'undefined') {
@@ -80,14 +84,22 @@ function App() {
   // TEST: Render TasksPage directly without router to check if router is the issue
   // If this works, the problem is with HashRouter in Telegram
   console.log('🧪 Testing: Rendering TasksPage directly without router')
-  console.log('🧪 USE_SIMPLE_VERSION:', USE_SIMPLE_VERSION)
+  console.log('🧪 VERSION:', VERSION)
   
-  if (USE_SIMPLE_VERSION) {
-    console.log('🧪 Using SIMPLE version for testing - WITH Layout')
-    // Test: Now with Layout to see if it works
+  if (VERSION === 'simple') {
+    console.log('🧪 Using SIMPLE version')
     return (
       <Layout>
         <TasksPageSimple />
+      </Layout>
+    )
+  }
+  
+  if (VERSION === 'progressive') {
+    console.log('🧪 Using PROGRESSIVE version (stats + tasks list, no complex components)')
+    return (
+      <Layout>
+        <TasksPageProgressive />
       </Layout>
     )
   }

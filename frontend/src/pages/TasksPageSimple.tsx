@@ -70,20 +70,33 @@ export default function TasksPageSimple() {
         boxSizing: 'border-box',
       }}
     >
-      <h1 style={{ 
-        color: '#FFFFFF', 
-        fontSize: '32px', 
+      <div className="page-header" style={{ 
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         marginBottom: '20px',
-        fontWeight: 'bold',
       }}>
-        FLUXPLANNER
-      </h1>
+        <h1 className="page-title" style={{ 
+          fontSize: '28px',
+          fontWeight: '700',
+          background: 'linear-gradient(135deg, #4a90e2 0%, #8b5cf6 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          flex: 1,
+          textAlign: 'center',
+        }}>
+          FLUXPLANNER
+        </h1>
+      </div>
+      
       <p style={{ 
         color: '#FFFFFF', 
         fontSize: '18px',
         marginBottom: '20px',
+        textAlign: 'center',
       }}>
-        Simple version - if you see this, basic rendering works!
+        ✅ Приложение работает! Добавляем компоненты...
       </p>
     </div>
   )

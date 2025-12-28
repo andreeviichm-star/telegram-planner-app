@@ -1,0 +1,141 @@
+import { useState, useEffect } from 'react'
+import { Plus, Filter, Menu } from 'lucide-react'
+import { Task, Priority } from '../types'
+import { getTasks } from '../services/api'
+import './TasksPage.css'
+
+export default function TasksPageProgressive() {
+  console.log('📋 TasksPageProgressive: Function called')
+  
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [filter, setFilter] = useState<{ priority?: Priority; status?: string }>({})
+
+  useEffect(() => {
+    console.log('📋 TasksPageProgressive: useEffect - loading tasks')
+    const loadTasks = async () => {
+      try {
+        const data = await getTasks(filter)
+        setTasks(data || [])
+        console.log('📋 TasksPageProgressive: Tasks loaded:', data?.length || 0)
+      } catch (error) {
+        console.error('Failed to load tasks:', error)
+        setTasks([])
+      }
+    }
+    loadTasks()
+  }, [filter])
+
+  const stats = {
+    total: tasks.length,
+    completed: tasks.filter(t => t.status === 'completed').length,
+    inProgress: tasks.filter(t => t.status === 'in_progress').length,
+    totalTime: tasks.reduce((sum, t) => sum + (t.estimatedTime || 0), 0)
+  }
+
+  console.log('📋 TasksPageProgressive: Returning JSX')
+  
+  return (
+    <div 
+      className="tasks-page" 
+      style={{
+        display: 'block',
+        visibility: 'visible',
+        opacity: 1,
+        width: '100%',
+        minHeight: '100vh',
+        padding: '20px',
+      }}
+    >
+      <div className="page-header">
+        <button
+          className="menu-btn glass-light"
+          onClick={() => console.log('Menu clicked')}
+          style={{
+            padding: '10px',
+            border: 'none',
+            borderRadius: '12px',
+            color: '#FFFFFF',
+            cursor: 'pointer',
+            background: 'rgba(22, 33, 62, 0.4)',
+          }}
+        >
+          <Menu size={24} />
+        </button>
+        <h1 className="page-title">FLUXPLANNER</h1>
+        <button
+          className="filter-btn glass-light"
+          onClick={() => console.log('Filter clicked')}
+          style={{
+            padding: '10px',
+            border: 'none',
+            borderRadius: '12px',
+            color: '#FFFFFF',
+            cursor: 'pointer',
+            background: 'rgba(22, 33, 62, 0.4)',
+          }}
+        >
+          <Filter size={20} />
+        </button>
+      </div>
+
+      <div className="stats-grid">
+        <div className="stat-card glass">
+          <div className="stat-value">{stats.total}</div>
+          <div className="stat-label">Всего задач</div>
+        </div>
+        <div className="stat-card glass">
+          <div className="stat-value">{stats.completed}</div>
+          <div className="stat-label">Выполнено</div>
+        </div>
+        <div className="stat-card glass">
+          <div className="stat-value">{stats.inProgress}</div>
+          <div className="stat-label">В работе</div>
+        </div>
+        <div className="stat-card glass">
+          <div className="stat-value">{stats.totalTime}h</div>
+          <div className="stat-label">Время</div>
+        </div>
+      </div>
+
+      <div className="tasks-list">
+        {tasks.length === 0 && (
+          <div className="empty-state glass">
+            <p>Нет задач</p>
+            <p className="empty-hint">Нажмите + чтобы создать задачу</p>
+          </div>
+        )}
+        {tasks.map(task => (
+          <div key={task.id} className="glass" style={{ padding: '16px', marginBottom: '12px' }}>
+            <h3 style={{ color: '#FFFFFF', marginBottom: '8px' }}>{task.title}</h3>
+            <p style={{ color: '#B8C5D6', fontSize: '14px' }}>{task.description || 'Нет описания'}</p>
+          </div>
+        ))}
+      </div>
+
+      <button 
+        className="fab glass" 
+        onClick={() => console.log('FAB clicked')}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          width: '56px',
+          height: '56px',
+          borderRadius: '50%',
+          border: 'none',
+          color: '#FFFFFF',
+          cursor: 'pointer',
+          background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+          boxShadow: '0 4px 20px rgba(139, 92, 246, 0.4)',
+          zIndex: 999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Plus size={24} />
+      </button>
+    </div>
+  )
+}
+
