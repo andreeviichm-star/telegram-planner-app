@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
 import { Plus, Menu, Video, Clock, MapPin } from 'lucide-react'
 import MeetingCard from '../components/MeetingCard'
 import MeetingModal from '../components/MeetingModal'
@@ -8,8 +7,11 @@ import { Meeting, MeetingPlatform } from '../types'
 import { getMeetings, createMeeting, updateMeeting, deleteMeeting } from '../services/api'
 import './MeetingsPage.css'
 
-export default function MeetingsPage() {
-  const location = useLocation()
+interface MeetingsPageProps {
+  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+}
+
+export default function MeetingsPage({ onNavigate }: MeetingsPageProps = {}) {
   const [meetings, setMeetings] = useState<Meeting[]>([])
   const [isMeetingModalOpen, setIsMeetingModalOpen] = useState(false)
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
@@ -128,7 +130,8 @@ export default function MeetingsPage() {
         <MenuModal
           isOpen={isMenuModalOpen}
           onClose={() => setIsMenuModalOpen(false)}
-          currentPath={location.pathname}
+          currentPath="meetings"
+          onNavigate={onNavigate}
         />
       )}
     </div>

@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
 import { Plus, Menu, TrendingUp, TrendingDown, Target } from 'lucide-react'
 import TransactionCard from '../components/TransactionCard'
 import TransactionModal from '../components/TransactionModal'
@@ -8,8 +7,11 @@ import { BudgetTransaction, TransactionType } from '../types'
 import { getTransactions, createTransaction, updateTransaction, deleteTransaction } from '../services/api'
 import './BudgetPage.css'
 
-export default function BudgetPage() {
-  const location = useLocation()
+interface BudgetPageProps {
+  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+}
+
+export default function BudgetPage({ onNavigate }: BudgetPageProps = {}) {
   const [transactions, setTransactions] = useState<BudgetTransaction[]>([])
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false)
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
@@ -207,7 +209,8 @@ export default function BudgetPage() {
         <MenuModal
           isOpen={isMenuModalOpen}
           onClose={() => setIsMenuModalOpen(false)}
-          currentPath={location.pathname}
+          currentPath="budget"
+          onNavigate={onNavigate}
         />
       )}
     </div>

@@ -103,11 +103,11 @@ function App() {
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'calendar':
-        return <CalendarPage />
+        return <CalendarPage onNavigate={setCurrentPage} />
       case 'meetings':
-        return <MeetingsPage />
+        return <MeetingsPage onNavigate={setCurrentPage} />
       case 'budget':
-        return <BudgetPage />
+        return <BudgetPage onNavigate={setCurrentPage} />
       case 'tasks':
       default:
         return renderPage()

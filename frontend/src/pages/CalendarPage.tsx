@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, Plus, Menu } from 'lucide-react'
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from 'date-fns'
 import { ru } from 'date-fns/locale'
@@ -10,8 +9,11 @@ import { CalendarEvent } from '../types'
 import { getCalendarEvents, createCalendarEvent, updateCalendarEvent, deleteCalendarEvent } from '../services/api'
 import './CalendarPage.css'
 
-export default function CalendarPage() {
-  const location = useLocation()
+interface CalendarPageProps {
+  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+}
+
+export default function CalendarPage({ onNavigate }: CalendarPageProps = {}) {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [events, setEvents] = useState<CalendarEvent[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -179,7 +181,8 @@ export default function CalendarPage() {
         <MenuModal
           isOpen={isMenuModalOpen}
           onClose={() => setIsMenuModalOpen(false)}
-          currentPath={location.pathname}
+          currentPath="calendar"
+          onNavigate={onNavigate}
         />
       )}
     </div>
