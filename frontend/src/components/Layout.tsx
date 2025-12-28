@@ -9,9 +9,6 @@ export default function Layout({ children }: LayoutProps) {
   console.log('📐 Layout render - children:', {
     hasChildren: !!children,
     childrenType: typeof children,
-    childrenValue: children,
-    childrenString: String(children).substring(0, 200),
-    isReactElement: React.isValidElement(children),
   })
   
   // Force render children
