@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
 import { Plus, Filter, Menu } from 'lucide-react'
 import TaskCard from '../components/TaskCard'
-// import TaskModal from '../components/TaskModal'
+import TaskModal from '../components/TaskModal'
 // import BudgetWidget from '../components/BudgetWidget'
 import { Task, Priority } from '../types'
-import { getTasks } from '../services/api'
+import { getTasks, createTask, updateTask, deleteTask } from '../services/api'
 import './TasksPage.css'
 
 export default function TasksPageProgressive() {
   console.log('📋 TasksPageProgressive: Function called')
   
   const [tasks, setTasks] = useState<Task[]>([])
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [filter, setFilter] = useState<{ priority?: Priority; status?: string }>({})
 
   useEffect(() => {
@@ -27,6 +29,44 @@ export default function TasksPageProgressive() {
     }
     loadTasks()
   }, [filter])
+
+  const handleCreateTask = () => {
+    setSelectedTask(null)
+    setIsTaskModalOpen(true)
+  }
+
+  const handleEditTask = (task: Task) => {
+    setSelectedTask(task)
+    setIsTaskModalOpen(true)
+  }
+
+  const handleSaveTask = async (taskData: Partial<Task>) => {
+    try {
+      if (selectedTask) {
+        await updateTask(selectedTask.id, taskData)
+      } else {
+        await createTask(taskData as Task)
+      }
+      setIsTaskModalOpen(false)
+      setSelectedTask(null)
+      // Reload tasks
+      const data = await getTasks(filter)
+      setTasks(data || [])
+    } catch (error) {
+      console.error('Failed to save task:', error)
+    }
+  }
+
+  const handleDeleteTask = async (id: string) => {
+    try {
+      await deleteTask(id)
+      // Reload tasks
+      const data = await getTasks(filter)
+      setTasks(data || [])
+    } catch (error) {
+      console.error('Failed to delete task:', error)
+    }
+  }
 
   const stats = {
     total: tasks.length,
@@ -114,15 +154,15 @@ export default function TasksPageProgressive() {
           <TaskCard
             key={task.id}
             task={task}
-            onEdit={(task) => console.log('Edit task:', task)}
-            onDelete={(id) => console.log('Delete task:', id)}
+            onEdit={handleEditTask}
+            onDelete={handleDeleteTask}
           />
         ))}
       </div>
 
       <button 
         className="fab glass" 
-        onClick={() => console.log('FAB clicked')}
+        onClick={handleCreateTask}
         style={{
           position: 'fixed',
           bottom: '20px',
@@ -143,6 +183,17 @@ export default function TasksPageProgressive() {
       >
         <Plus size={24} />
       </button>
+
+      {isTaskModalOpen && (
+        <TaskModal
+          task={selectedTask}
+          onClose={() => {
+            setIsTaskModalOpen(false)
+            setSelectedTask(null)
+          }}
+          onSave={handleSaveTask}
+        />
+      )}
     </div>
   )
 }
