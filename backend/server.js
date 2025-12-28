@@ -18,8 +18,18 @@ const PORT = process.env.PORT || 3001
 
 // Middleware
 app.use(cors({
-  origin: '*', // Разрешаем все источники для Telegram
-  credentials: true
+  origin: [
+    'https://andreeviichm-star.github.io',
+    'http://localhost:3000',
+    'http://localhost:5173',
+    /\.github\.io$/,
+    /\.railway\.app$/,
+    /\.netlify\.app$/,
+    /\.vercel\.app$/
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }))
 app.use(express.json())
 
