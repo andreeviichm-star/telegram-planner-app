@@ -4,7 +4,7 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMont
 import { ru } from 'date-fns/locale'
 import CalendarDay from '../components/CalendarDay'
 import CalendarEventModal from '../components/CalendarEventModal'
-import { CalendarEvent, EventType } from '../types'
+import { CalendarEvent } from '../types'
 import { getCalendarEvents, createCalendarEvent, updateCalendarEvent, deleteCalendarEvent } from '../services/api'
 import './CalendarPage.css'
 

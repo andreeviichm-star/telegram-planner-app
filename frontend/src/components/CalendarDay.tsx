@@ -7,15 +7,14 @@ interface CalendarDayProps {
   events: CalendarEvent[]
   isCurrentMonth: boolean
   onClick: () => void
-  onEventClick: (event: CalendarEvent) => void
+  onEventClick?: (event: CalendarEvent) => void
 }
 
 export default function CalendarDay({
   date,
   events,
   isCurrentMonth,
-  onClick,
-  onEventClick
+  onClick
 }: CalendarDayProps) {
   const dayNumber = format(date, 'd')
   const isCurrentDay = isToday(date)
