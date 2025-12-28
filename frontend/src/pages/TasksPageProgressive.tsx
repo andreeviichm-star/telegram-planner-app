@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { Plus, Filter, Menu } from 'lucide-react'
 import TaskCard from '../components/TaskCard'
 // import TaskModal from '../components/TaskModal'
-// import BudgetWidget from '../components/BudgetWidget'
-import { Task, Priority } from '../services/api'
+import BudgetWidget from '../components/BudgetWidget'
+import { Task, Priority } from '../types'
 import { getTasks } from '../services/api'
 import './TasksPage.css'
 
@@ -100,8 +100,7 @@ export default function TasksPageProgressive() {
         </div>
       </div>
 
-      {/* BudgetWidget - добавляем постепенно */}
-      {/* <BudgetWidget /> */}
+      <BudgetWidget />
 
       <div className="tasks-list">
         {tasks.length === 0 && (
