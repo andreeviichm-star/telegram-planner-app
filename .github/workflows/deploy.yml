@@ -49,7 +49,14 @@ jobs:
           echo "=== Checking for index.html ==="
           if [ -f "frontend/dist/index.html" ]; then
             echo "✅ index.html found"
-            head -5 frontend/dist/index.html
+            echo "=== First 20 lines of index.html ==="
+            head -20 frontend/dist/index.html
+            echo ""
+            echo "=== Checking for script tags ==="
+            grep -i "script" frontend/dist/index.html || echo "No script tags found!"
+            echo ""
+            echo "=== Assets directory ==="
+            ls -la frontend/dist/assets/ || echo "Assets directory not found!"
           else
             echo "❌ index.html NOT FOUND!"
             exit 1
@@ -66,3 +73,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
