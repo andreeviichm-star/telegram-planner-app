@@ -2,9 +2,13 @@
   display: flex !important;
   flex-direction: column;
   min-height: 100vh;
+  min-width: 100%;
+  width: 100%;
   padding-bottom: 20px;
   visibility: visible !important;
   opacity: 1 !important;
+  position: relative;
+  z-index: 1;
 }
 
 .main-content {

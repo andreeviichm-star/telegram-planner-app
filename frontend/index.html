@@ -5,9 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#1a1a2e" />
     <meta name="format-detection" content="telephone=no" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://telegram.org https://*.telegram.org https://*.github.io https://*.githubusercontent.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https: blob: https://*.yandex.net https://*.s3.yandex.net https://*.4sqi.net; font-src 'self' data: https:; connect-src 'self' https: wss: ws: https://*.onrender.com; frame-src 'self' https://telegram.org; object-src 'none'; base-uri 'self' https://andreeviichm-star.github.io;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://telegram.org https://*.telegram.org https://*.github.io https://*.githubusercontent.com https://andreeviichm-star.github.io; style-src 'self' 'unsafe-inline' https: https://andreeviichm-star.github.io; img-src 'self' data: https: blob: https://*.yandex.net https://*.s3.yandex.net https://*.4sqi.net https://andreeviichm-star.github.io; font-src 'self' data: https: https://andreeviichm-star.github.io; connect-src 'self' https: wss: ws: https://*.onrender.com https://andreeviichm-star.github.io; frame-src 'self' https://telegram.org; object-src 'none'; base-uri 'self' https://andreeviichm-star.github.io;" />
     <title>FLUXPLANNER</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      // Ensure Telegram WebApp is ready before React loads
+      (function() {
+        if (window.Telegram && window.Telegram.WebApp) {
+          try {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand();
+            console.log('✅ Telegram WebApp initialized in HTML');
+          } catch (e) {
+            console.error('❌ Telegram WebApp init error:', e);
+          }
+        } else {
+          // Wait for script to load
+          window.addEventListener('load', function() {
+            if (window.Telegram && window.Telegram.WebApp) {
+              try {
+                window.Telegram.WebApp.ready();
+                window.Telegram.WebApp.expand();
+                console.log('✅ Telegram WebApp initialized after load');
+              } catch (e) {
+                console.error('❌ Telegram WebApp init error:', e);
+              }
+            }
+          });
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

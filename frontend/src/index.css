@@ -46,11 +46,20 @@ body {
   overflow-x: hidden;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
 #root {
   min-height: 100vh !important;
   width: 100% !important;
   background: var(--bg-primary) !important;
   display: block !important;
+  position: relative !important;
   visibility: visible !important;
   opacity: 1 !important;
 }

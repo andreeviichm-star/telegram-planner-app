@@ -3,25 +3,29 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
-const rootElement = document.getElementById('root')
+// Wait for DOM and Telegram WebApp to be ready
+const initApp = () => {
+  const rootElement = document.getElementById('root')
 
-if (!rootElement) {
-  console.error('Root element not found!')
-  document.body.innerHTML = `
-    <div style="
-      padding: 20px; 
-      color: white; 
-      background: #0a0e27; 
-      min-height: 100vh; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      font-family: system-ui;
-    ">
-      Ошибка: корневой элемент не найден
-    </div>
-  `
-} else {
+  if (!rootElement) {
+    console.error('Root element not found!')
+    document.body.innerHTML = `
+      <div style="
+        padding: 20px; 
+        color: white; 
+        background: #0a0e27; 
+        min-height: 100vh; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-family: system-ui;
+      ">
+        Ошибка: корневой элемент не найден
+      </div>
+    `
+    return
+  }
+
   // Debug: log before render
   console.log('🚀 Starting React render...', {
     rootElement: rootElement,
@@ -63,5 +67,13 @@ if (!rootElement) {
       </div>
     `
   }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp)
+} else {
+  // DOM is already ready
+  initApp()
 }
 
