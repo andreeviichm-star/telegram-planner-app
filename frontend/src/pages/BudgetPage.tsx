@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Plus, Menu, TrendingUp, TrendingDown, Target } from 'lucide-react'
 import TransactionCard from '../components/TransactionCard'
@@ -6,6 +6,7 @@ import TransactionModal from '../components/TransactionModal'
 import MenuModal from '../components/MenuModal'
 import { BudgetTransaction, TransactionType } from '../types'
 import { getTransactions, createTransaction, updateTransaction, deleteTransaction } from '../services/api'
+import { logger } from '../utils/logger'
 import './BudgetPage.css'
 
 export default function BudgetPage() {
@@ -18,17 +19,17 @@ export default function BudgetPage() {
 
   useEffect(() => {
     loadTransactions()
-  }, [])
+  }, [loadTransactions])
 
-  const loadTransactions = async () => {
+  const loadTransactions = useCallback(async () => {
     try {
       const data = await getTransactions()
       setTransactions(data || [])
     } catch (error) {
-      console.error('Ошибка загрузки транзакций:', error)
+      logger.error('Failed to load transactions:', error)
       setTransactions([])
     }
-  }
+  }, [])
 
   const handleCreateTransaction = (type: TransactionType) => {
     setTransactionType(type)
@@ -53,7 +54,7 @@ export default function BudgetPage() {
       setSelectedTransaction(null)
       loadTransactions()
     } catch (error) {
-      console.error('Ошибка сохранения транзакции:', error)
+      logger.error('Failed to save transaction:', error)
     }
   }
 
@@ -62,7 +63,7 @@ export default function BudgetPage() {
       await deleteTransaction(id)
       loadTransactions()
     } catch (error) {
-      console.error('Ошибка удаления транзакции:', error)
+      logger.error('Failed to delete transaction:', error)
     }
   }
 

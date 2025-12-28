@@ -1,19 +1,36 @@
 import axios from 'axios'
 import { Task, CalendarEvent, Meeting, BudgetTransaction } from '../types'
+import { logger } from '../utils/logger'
 
-// Проверяем API URL и добавляем /api если его нет
-let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
-if (API_URL && !API_URL.endsWith('/api')) {
-  API_URL = API_URL.endsWith('/') ? `${API_URL}api` : `${API_URL}/api`
+/**
+ * Normalize API URL - ensure it ends with /api
+ */
+const normalizeApiUrl = (url: string): string => {
+  if (!url) return 'http://localhost:3001/api'
+  if (url.endsWith('/api')) return url
+  return url.endsWith('/') ? `${url}api` : `${url}/api`
 }
-console.log('🔗 Final API URL:', API_URL)
+
+const API_URL = normalizeApiUrl(import.meta.env.VITE_API_URL || 'http://localhost:3001/api')
+
+logger.info('API URL:', API_URL)
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
+  timeout: 10000, // 10 seconds timeout
 })
+
+// Request interceptor for error handling
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    logger.error('API Error:', error.message)
+    return Promise.reject(error)
+  }
+)
 
 // Tasks API
 export const getTasks = async (filter?: { priority?: string; status?: string }) => {

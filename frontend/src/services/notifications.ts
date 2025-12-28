@@ -1,12 +1,22 @@
 import axios from 'axios'
 import { Task, Meeting } from '../types'
+import { logger } from '../utils/logger'
 
+// Use the same API instance from api.ts
+// Import it to avoid duplication
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+const normalizeApiUrl = (url: string): string => {
+  if (!url) return 'http://localhost:3001/api'
+  if (url.endsWith('/api')) return url
+  return url.endsWith('/') ? `${url}api` : `${url}/api`
+}
+
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: normalizeApiUrl(API_URL),
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
+  timeout: 10000,
 })
 
 // Проверка задач с истекающим сроком (за 24 часа)
@@ -64,9 +74,9 @@ async function createTaskNotification(task: Task): Promise<void> {
       scheduledAt: scheduledAt.toISOString()
     })
     
-    console.log(`Notification scheduled for task: ${task.title}`)
+    logger.info(`Notification scheduled for task: ${task.title}`)
   } catch (error) {
-    console.error('Error creating task notification:', error)
+    logger.error('Error creating task notification:', error)
   }
 }
 
@@ -83,9 +93,9 @@ async function createMeetingNotification(meeting: Meeting): Promise<void> {
       scheduledAt: scheduledAt.toISOString()
     })
     
-    console.log(`Notification scheduled for meeting: ${meeting.title}`)
+    logger.info(`Notification scheduled for meeting: ${meeting.title}`)
   } catch (error) {
-    console.error('Error creating meeting notification:', error)
+    logger.error('Error creating meeting notification:', error)
   }
 }
 
@@ -103,7 +113,7 @@ export function startNotificationChecker(
       const meetings = await getMeetings()
       await checkMeetingNotifications(meetings)
     } catch (error) {
-      console.error('Error checking notifications:', error)
+      logger.error('Error checking notifications:', error)
     }
   }, 30 * 60 * 1000) // 30 минут
 }

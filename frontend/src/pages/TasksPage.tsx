@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Plus, Filter, Menu } from 'lucide-react'
 import TaskCard from '../components/TaskCard'
@@ -8,6 +8,7 @@ import MenuModal from '../components/MenuModal'
 import BudgetWidget from '../components/BudgetWidget'
 import { Task, Priority } from '../types'
 import { getTasks, createTask, updateTask, deleteTask } from '../services/api'
+import { logger } from '../utils/logger'
 import './TasksPage.css'
 
 export default function TasksPage() {
@@ -20,12 +21,8 @@ export default function TasksPage() {
   const [filter, setFilter] = useState<{ priority?: Priority; status?: string }>({})
 
   useEffect(() => {
-    console.log('📋 TasksPage component mounted')
-  }, [])
-
-  useEffect(() => {
     loadTasks()
-  }, [filter])
+  }, [loadTasks])
 
   useEffect(() => {
     // Проверка уведомлений для задач
@@ -38,16 +35,15 @@ export default function TasksPage() {
     checkNotifications()
   }, [tasks])
 
-  const loadTasks = async () => {
+  const loadTasks = useCallback(async () => {
     try {
       const data = await getTasks(filter)
       setTasks(data || [])
     } catch (error) {
-      console.error('Ошибка загрузки задач:', error)
-      // Показываем пустой список, если backend недоступен
+      logger.error('Failed to load tasks:', error)
       setTasks([])
     }
-  }
+  }, [filter])
 
   const handleCreateTask = () => {
     setSelectedTask(null)
@@ -70,7 +66,7 @@ export default function TasksPage() {
       setSelectedTask(null)
       loadTasks()
     } catch (error) {
-      console.error('Ошибка сохранения задачи:', error)
+      logger.error('Failed to save task:', error)
     }
   }
 
@@ -79,7 +75,7 @@ export default function TasksPage() {
       await deleteTask(id)
       loadTasks()
     } catch (error) {
-      console.error('Ошибка удаления задачи:', error)
+      logger.error('Failed to delete task:', error)
     }
   }
 

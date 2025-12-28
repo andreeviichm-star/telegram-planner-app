@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { TrendingUp, TrendingDown, Wallet } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { getTransactions } from '../services/api'
 import { BudgetTransaction } from '../types'
+import { logger } from '../utils/logger'
 import './BudgetWidget.css'
 
 export default function BudgetWidget() {
@@ -12,19 +13,19 @@ export default function BudgetWidget() {
 
   useEffect(() => {
     loadTransactions()
-  }, [])
+  }, [loadTransactions])
 
-  const loadTransactions = async () => {
+  const loadTransactions = useCallback(async () => {
     try {
       const data = await getTransactions()
       setTransactions(data || [])
     } catch (error) {
-      console.error('Ошибка загрузки транзакций:', error)
+      logger.error('Failed to load transactions:', error)
       setTransactions([])
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   if (loading) {
     return (

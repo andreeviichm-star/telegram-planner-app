@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, Plus, Menu } from 'lucide-react'
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from 'date-fns'
@@ -8,6 +8,7 @@ import CalendarEventModal from '../components/CalendarEventModal'
 import MenuModal from '../components/MenuModal'
 import { CalendarEvent } from '../types'
 import { getCalendarEvents, createCalendarEvent, updateCalendarEvent, deleteCalendarEvent } from '../services/api'
+import { logger } from '../utils/logger'
 import './CalendarPage.css'
 
 export default function CalendarPage() {
@@ -21,19 +22,19 @@ export default function CalendarPage() {
 
   useEffect(() => {
     loadEvents()
-  }, [currentDate])
+  }, [loadEvents])
 
-  const loadEvents = async () => {
+  const loadEvents = useCallback(async () => {
     try {
       const start = startOfMonth(currentDate)
       const end = endOfMonth(currentDate)
       const data = await getCalendarEvents(start, end)
       setEvents(data || [])
     } catch (error) {
-      console.error('Ошибка загрузки событий:', error)
+      logger.error('Failed to load events:', error)
       setEvents([])
     }
-  }
+  }, [currentDate])
 
   const monthStart = startOfMonth(currentDate)
   const monthEnd = endOfMonth(currentDate)
@@ -74,7 +75,7 @@ export default function CalendarPage() {
       setSelectedEvent(null)
       loadEvents()
     } catch (error) {
-      console.error('Ошибка сохранения события:', error)
+      logger.error('Failed to save event:', error)
     }
   }
 
@@ -83,7 +84,7 @@ export default function CalendarPage() {
       await deleteCalendarEvent(id)
       loadEvents()
     } catch (error) {
-      console.error('Ошибка удаления события:', error)
+      logger.error('Failed to delete event:', error)
     }
   }
 

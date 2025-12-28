@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Plus, Menu, Video, Clock, MapPin } from 'lucide-react'
 import MeetingCard from '../components/MeetingCard'
@@ -6,6 +6,7 @@ import MeetingModal from '../components/MeetingModal'
 import MenuModal from '../components/MenuModal'
 import { Meeting, MeetingPlatform } from '../types'
 import { getMeetings, createMeeting, updateMeeting, deleteMeeting } from '../services/api'
+import { logger } from '../utils/logger'
 import './MeetingsPage.css'
 
 export default function MeetingsPage() {
@@ -17,7 +18,7 @@ export default function MeetingsPage() {
 
   useEffect(() => {
     loadMeetings()
-  }, [])
+  }, [loadMeetings])
 
   useEffect(() => {
     // Проверка уведомлений для созвонов
@@ -30,15 +31,15 @@ export default function MeetingsPage() {
     checkNotifications()
   }, [meetings])
 
-  const loadMeetings = async () => {
+  const loadMeetings = useCallback(async () => {
     try {
       const data = await getMeetings()
       setMeetings(data || [])
     } catch (error) {
-      console.error('Ошибка загрузки созвонов:', error)
+      logger.error('Failed to load meetings:', error)
       setMeetings([])
     }
-  }
+  }, [])
 
   const handleCreateMeeting = () => {
     setSelectedMeeting(null)
@@ -61,7 +62,7 @@ export default function MeetingsPage() {
       setSelectedMeeting(null)
       loadMeetings()
     } catch (error) {
-      console.error('Ошибка сохранения созвона:', error)
+      logger.error('Failed to save meeting:', error)
     }
   }
 
@@ -70,7 +71,7 @@ export default function MeetingsPage() {
       await deleteMeeting(id)
       loadMeetings()
     } catch (error) {
-      console.error('Ошибка удаления созвона:', error)
+      logger.error('Failed to delete meeting:', error)
     }
   }
 
