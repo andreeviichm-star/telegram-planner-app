@@ -1,0 +1,55 @@
+.calendar-day {
+  aspect-ratio: 1;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  min-height: 60px;
+}
+
+.calendar-day:active {
+  transform: scale(0.95);
+}
+
+.calendar-day.today {
+  border: 2px solid var(--accent-blue);
+  background: rgba(74, 144, 226, 0.1);
+}
+
+.calendar-day.other-month {
+  opacity: 0.3;
+}
+
+.day-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.day-events {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.event-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.event-dot.period {
+  background: #ef4444;
+}
+
+.event-dot.ovulation {
+  background: #f59e0b;
+}
+
+.event-dot.sex {
+  background: #8b5cf6;
+}
+
