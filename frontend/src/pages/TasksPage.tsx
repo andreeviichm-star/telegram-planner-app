@@ -37,9 +37,11 @@ export default function TasksPage() {
   const loadTasks = async () => {
     try {
       const data = await getTasks(filter)
-      setTasks(data)
+      setTasks(data || [])
     } catch (error) {
       console.error('Ошибка загрузки задач:', error)
+      // Показываем пустой список, если backend недоступен
+      setTasks([])
     }
   }
 

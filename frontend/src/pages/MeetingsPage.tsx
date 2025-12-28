@@ -33,9 +33,10 @@ export default function MeetingsPage() {
   const loadMeetings = async () => {
     try {
       const data = await getMeetings()
-      setMeetings(data)
+      setMeetings(data || [])
     } catch (error) {
       console.error('Ошибка загрузки созвонов:', error)
+      setMeetings([])
     }
   }
 

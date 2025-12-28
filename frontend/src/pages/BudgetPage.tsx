@@ -23,9 +23,10 @@ export default function BudgetPage() {
   const loadTransactions = async () => {
     try {
       const data = await getTransactions()
-      setTransactions(data)
+      setTransactions(data || [])
     } catch (error) {
       console.error('Ошибка загрузки транзакций:', error)
+      setTransactions([])
     }
   }
 

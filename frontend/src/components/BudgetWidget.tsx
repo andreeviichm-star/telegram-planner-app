@@ -17,9 +17,10 @@ export default function BudgetWidget() {
   const loadTransactions = async () => {
     try {
       const data = await getTransactions()
-      setTransactions(data)
+      setTransactions(data || [])
     } catch (error) {
       console.error('Ошибка загрузки транзакций:', error)
+      setTransactions([])
     } finally {
       setLoading(false)
     }

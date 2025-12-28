@@ -28,9 +28,10 @@ export default function CalendarPage() {
       const start = startOfMonth(currentDate)
       const end = endOfMonth(currentDate)
       const data = await getCalendarEvents(start, end)
-      setEvents(data)
+      setEvents(data || [])
     } catch (error) {
       console.error('Ошибка загрузки событий:', error)
+      setEvents([])
     }
   }
 

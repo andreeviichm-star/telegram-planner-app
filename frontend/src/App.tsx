@@ -23,9 +23,14 @@ declare global {
 
 function App() {
   useEffect(() => {
+    console.log('App component mounted')
+    console.log('API URL:', import.meta.env.VITE_API_URL)
+    console.log('Base path:', import.meta.env.VITE_BASE_PATH)
+    
     // Используем Telegram WebApp API напрямую
     const initTelegram = () => {
       try {
+        console.log('Initializing Telegram WebApp...')
         // Проверяем наличие Telegram WebApp
         if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
           const tg = window.Telegram.WebApp
@@ -33,8 +38,9 @@ function App() {
           tg.expand()
           tg.setHeaderColor('#0a0e27')
           tg.setBackgroundColor('#0a0e27')
-          console.log('Telegram WebApp initialized successfully')
+          console.log('✅ Telegram WebApp initialized successfully')
         } else {
+          console.log('Telegram WebApp not found, waiting...')
           // Если скрипт еще не загружен, ждем (максимум 3 секунды)
           let attempts = 0
           const maxAttempts = 30
@@ -47,15 +53,15 @@ function App() {
               tg.expand()
               tg.setHeaderColor('#0a0e27')
               tg.setBackgroundColor('#0a0e27')
-              console.log('Telegram WebApp initialized after delay')
+              console.log('✅ Telegram WebApp initialized after delay')
             } else if (attempts >= maxAttempts) {
               clearInterval(checkInterval)
-              console.warn('Telegram WebApp not available - running in browser mode')
+              console.warn('⚠️ Telegram WebApp not available - running in browser mode')
             }
           }, 100)
         }
       } catch (error) {
-        console.error('Telegram WebApp error:', error)
+        console.error('❌ Telegram WebApp error:', error)
         // Приложение все равно должно работать без Telegram API
       }
     }

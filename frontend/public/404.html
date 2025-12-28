@@ -6,8 +6,12 @@
     <title>FLUXPLANNER</title>
     <script>
       // Перенаправление на index.html для SPA routing
-      sessionStorage.redirect = location.href;
-      location.replace(location.pathname.split('/').slice(0, -1).join('/') + '/index.html');
+      var path = window.location.pathname;
+      if (path.startsWith('/telegram-planner-app/')) {
+        window.location.replace('/telegram-planner-app/index.html');
+      } else {
+        window.location.replace('/index.html');
+      }
     </script>
   </head>
   <body>
@@ -16,4 +20,3 @@
     </noscript>
   </body>
 </html>
-
