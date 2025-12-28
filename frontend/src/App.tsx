@@ -67,11 +67,20 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    console.log('🔗 Current location:', window.location.href)
+    console.log('🔗 Hash:', window.location.hash)
+    console.log('🔗 Pathname:', window.location.pathname)
+  }, [])
+
   return (
     <HashRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<TasksPage />} />
+          <Route 
+            path="/" 
+            element={<TasksPage />} 
+          />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/meetings" element={<MeetingsPage />} />
           <Route path="/budget" element={<BudgetPage />} />

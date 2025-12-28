@@ -6,27 +6,57 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  console.log('📐 Layout render - children:', {
+    hasChildren: !!children,
+    childrenType: typeof children,
+    childrenValue: children,
+  })
+  
   useEffect(() => {
-    console.log('📐 Layout mounted', {
+    console.log('📐 Layout mounted (useEffect)', {
       hasChildren: !!children,
       childrenType: typeof children,
     })
     
-    // Force visibility
-    const layout = document.querySelector('.layout') as HTMLElement
-    const mainContent = document.querySelector('.main-content') as HTMLElement
-    
-    if (layout) {
-      layout.style.setProperty('display', 'flex', 'important')
-      layout.style.setProperty('visibility', 'visible', 'important')
-      layout.style.setProperty('opacity', '1', 'important')
-      layout.style.setProperty('min-height', '100vh', 'important')
-    }
-    
-    if (mainContent) {
-      mainContent.style.setProperty('display', 'block', 'important')
-      mainContent.style.setProperty('visibility', 'visible', 'important')
-    }
+    // Force visibility with delay to ensure React has rendered
+    setTimeout(() => {
+      const layout = document.querySelector('.layout') as HTMLElement
+      const mainContent = document.querySelector('.main-content') as HTMLElement
+      
+      console.log('📐 Layout elements check:', {
+        layout: !!layout,
+        mainContent: !!mainContent,
+        layoutDisplay: layout ? window.getComputedStyle(layout).display : 'N/A',
+        layoutVisibility: layout ? window.getComputedStyle(layout).visibility : 'N/A',
+        layoutOpacity: layout ? window.getComputedStyle(layout).opacity : 'N/A',
+        layoutWidth: layout ? window.getComputedStyle(layout).width : 'N/A',
+        layoutHeight: layout ? window.getComputedStyle(layout).height : 'N/A',
+        mainContentDisplay: mainContent ? window.getComputedStyle(mainContent).display : 'N/A',
+        mainContentChildren: mainContent?.children.length || 0,
+      })
+      
+      if (layout) {
+        const style = window.getComputedStyle(layout)
+        if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) {
+          console.warn('⚠️ Layout is hidden! Forcing visibility...')
+        }
+        layout.style.setProperty('display', 'flex', 'important')
+        layout.style.setProperty('visibility', 'visible', 'important')
+        layout.style.setProperty('opacity', '1', 'important')
+        layout.style.setProperty('min-height', '100vh', 'important')
+        layout.style.setProperty('width', '100%', 'important')
+      }
+      
+      if (mainContent) {
+        const style = window.getComputedStyle(mainContent)
+        if (style.display === 'none' || style.visibility === 'hidden') {
+          console.warn('⚠️ MainContent is hidden! Forcing visibility...')
+        }
+        mainContent.style.setProperty('display', 'block', 'important')
+        mainContent.style.setProperty('visibility', 'visible', 'important')
+        mainContent.style.setProperty('width', '100%', 'important')
+      }
+    }, 200)
   }, [children])
 
   return (

@@ -11,11 +11,44 @@ import { getTasks, createTask, updateTask, deleteTask } from '../services/api'
 import './TasksPage.css'
 
 export default function TasksPage() {
+  console.log('📋 TasksPage function called - component is rendering!')
+  
   const location = useLocation()
+  console.log('📋 TasksPage location:', location.pathname, location.hash)
+  
   const [tasks, setTasks] = useState<Task[]>([])
   
   useEffect(() => {
-    console.log('📋 TasksPage mounted')
+    console.log('📋 TasksPage mounted (useEffect)')
+    
+    // Force visibility check
+    setTimeout(() => {
+      const tasksPage = document.querySelector('.tasks-page')
+      const pageHeader = document.querySelector('.page-header')
+      const pageTitle = document.querySelector('.page-title')
+      
+      console.log('📋 TasksPage elements:', {
+        tasksPage: !!tasksPage,
+        pageHeader: !!pageHeader,
+        pageTitle: !!pageTitle,
+        tasksPageDisplay: tasksPage ? window.getComputedStyle(tasksPage).display : 'N/A',
+        tasksPageVisibility: tasksPage ? window.getComputedStyle(tasksPage).visibility : 'N/A',
+        tasksPageOpacity: tasksPage ? window.getComputedStyle(tasksPage).opacity : 'N/A',
+        tasksPageWidth: tasksPage ? window.getComputedStyle(tasksPage).width : 'N/A',
+        tasksPageHeight: tasksPage ? window.getComputedStyle(tasksPage).height : 'N/A',
+      })
+      
+      // Force visibility if hidden
+      if (tasksPage) {
+        const style = window.getComputedStyle(tasksPage)
+        if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) {
+          console.warn('⚠️ TasksPage is hidden! Forcing visibility...')
+          ;(tasksPage as HTMLElement).style.setProperty('display', 'block', 'important')
+          ;(tasksPage as HTMLElement).style.setProperty('visibility', 'visible', 'important')
+          ;(tasksPage as HTMLElement).style.setProperty('opacity', '1', 'important')
+        }
+      }
+    }, 1000)
   }, [])
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)

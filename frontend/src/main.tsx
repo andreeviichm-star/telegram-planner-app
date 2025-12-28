@@ -41,15 +41,37 @@ const initApp = () => {
       const layout = document.querySelector('.layout')
       const mainContent = document.querySelector('.main-content')
       const tasksPage = document.querySelector('.tasks-page')
+      const testElement = document.querySelector('[style*="background: red"]')
+      const pageTitle = document.querySelector('.page-title')
+      
       console.log('🔍 After render check:', {
         layout: !!layout,
         mainContent: !!mainContent,
         tasksPage: !!tasksPage,
+        testElement: !!testElement,
+        pageTitle: !!pageTitle,
         rootChildren: rootElement.children.length,
+        layoutChildren: layout?.children.length || 0,
+        mainContentChildren: mainContent?.children.length || 0,
         layoutDisplay: layout ? window.getComputedStyle(layout).display : 'N/A',
         layoutVisibility: layout ? window.getComputedStyle(layout).visibility : 'N/A',
+        layoutOpacity: layout ? window.getComputedStyle(layout).opacity : 'N/A',
+        layoutWidth: layout ? window.getComputedStyle(layout).width : 'N/A',
+        layoutHeight: layout ? window.getComputedStyle(layout).height : 'N/A',
+        tasksPageDisplay: tasksPage ? window.getComputedStyle(tasksPage).display : 'N/A',
+        tasksPageVisibility: tasksPage ? window.getComputedStyle(tasksPage).visibility : 'N/A',
+        tasksPageOpacity: tasksPage ? window.getComputedStyle(tasksPage).opacity : 'N/A',
+        testElementDisplay: testElement ? window.getComputedStyle(testElement).display : 'N/A',
+        testElementVisibility: testElement ? window.getComputedStyle(testElement).visibility : 'N/A',
       })
-    }, 500)
+      
+      // Log HTML structure
+      console.log('📄 HTML Structure:', {
+        rootHTML: rootElement.innerHTML.substring(0, 500),
+        layoutHTML: layout?.outerHTML.substring(0, 500),
+        mainContentHTML: mainContent?.innerHTML.substring(0, 500),
+      })
+    }, 1000)
   } catch (error) {
     console.error('❌ Failed to render React app:', error)
     rootElement.innerHTML = `
