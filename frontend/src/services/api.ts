@@ -1,7 +1,12 @@
 import axios from 'axios'
 import { Task, CalendarEvent, Meeting, BudgetTransaction } from '../types'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+// Проверяем API URL и добавляем /api если его нет
+let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+if (API_URL && !API_URL.endsWith('/api')) {
+  API_URL = API_URL.endsWith('/') ? `${API_URL}api` : `${API_URL}/api`
+}
+console.log('🔗 Final API URL:', API_URL)
 
 const api = axios.create({
   baseURL: API_URL,

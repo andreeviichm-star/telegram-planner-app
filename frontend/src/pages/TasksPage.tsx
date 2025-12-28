@@ -20,6 +20,10 @@ export default function TasksPage() {
   const [filter, setFilter] = useState<{ priority?: Priority; status?: string }>({})
 
   useEffect(() => {
+    console.log('📋 TasksPage component mounted')
+  }, [])
+
+  useEffect(() => {
     loadTasks()
   }, [filter])
 
