@@ -1,1 +1,8 @@
 GITHUB_PAGES_QUICK.md
+- name: Build
+  run: |
+    cd frontend
+    npm run build
+  env:
+    VITE_API_URL: ${{ secrets.VITE_API_URL }}
+    VITE_BASE_PATH: /telegram-planner-app/  # Добавьте эту строку
