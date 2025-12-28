@@ -12,12 +12,23 @@ if (typeof window !== 'undefined') {
   const initTelegram = () => {
     if (window.Telegram?.WebApp) {
       try {
-        window.Telegram.WebApp.ready()
-        window.Telegram.WebApp.expand()
-        window.Telegram.WebApp.setHeaderColor('#0a0e27')
-        window.Telegram.WebApp.setBackgroundColor('#0a0e27')
+        const tg = window.Telegram.WebApp
+        tg.ready()
+        tg.expand()
+        
+        // Check version before using color methods (not supported in 6.0)
+        const version = parseFloat(tg.version || '0')
+        if (version >= 6.1) {
+          // Only use color methods in newer versions
+          if (tg.setHeaderColor) {
+            tg.setHeaderColor('#0a0e27')
+          }
+          if (tg.setBackgroundColor) {
+            tg.setBackgroundColor('#0a0e27')
+          }
+        }
       } catch (error) {
-        // Ignore errors
+        // Ignore errors - app will work without Telegram API
       }
     }
   }

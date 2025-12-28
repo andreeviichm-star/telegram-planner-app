@@ -35,10 +35,20 @@ export const initTelegramWebApp = (): void => {
     try {
       tg.ready()
       tg.expand()
-      tg.setHeaderColor(TELEGRAM_COLORS.header)
-      tg.setBackgroundColor(TELEGRAM_COLORS.background)
+      
+      // Check version before using color methods (not supported in 6.0)
+      const version = parseFloat(tg.version || '0')
+      if (version >= 6.1) {
+        // Only use color methods in newer versions
+        if (tg.setHeaderColor) {
+          tg.setHeaderColor(TELEGRAM_COLORS.header)
+        }
+        if (tg.setBackgroundColor) {
+          tg.setBackgroundColor(TELEGRAM_COLORS.background)
+        }
+      }
     } catch (error) {
-      console.error('Failed to initialize Telegram WebApp:', error)
+      // Ignore errors - app will work without Telegram API
     }
   }
 
