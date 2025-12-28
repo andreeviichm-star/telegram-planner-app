@@ -1,12 +1,14 @@
 import { useState, useEffect, useCallback } from 'react'
 import { TrendingUp, TrendingDown, Wallet } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
 import { getTransactions } from '../services/api'
 import { BudgetTransaction } from '../types'
 import './BudgetWidget.css'
 
-export default function BudgetWidget() {
-  const navigate = useNavigate()
+interface BudgetWidgetProps {
+  onClick?: () => void
+}
+
+export default function BudgetWidget({ onClick }: BudgetWidgetProps = {}) {
   const [transactions, setTransactions] = useState<BudgetTransaction[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -28,12 +30,8 @@ export default function BudgetWidget() {
   }, [loadTransactions])
   
   const handleClick = () => {
-    try {
-      navigate('/budget')
-    } catch (error) {
-      console.error('Navigation error:', error)
-      // Fallback to window.location if navigate fails
-      window.location.hash = '#/budget'
+    if (onClick) {
+      onClick()
     }
   }
 
@@ -60,7 +58,7 @@ export default function BudgetWidget() {
   const balance = income - expenses
 
   return (
-    <div className="budget-widget glass" onClick={handleClick}>
+    <div className="budget-widget glass" onClick={handleClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
       <div className="budget-widget-header">
         <Wallet size={20} />
         <span>Бюджет</span>

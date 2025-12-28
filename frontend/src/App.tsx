@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import TasksPage from './pages/TasksPage'
@@ -49,6 +49,8 @@ if (typeof window !== 'undefined') {
 }
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<'tasks' | 'calendar' | 'meetings' | 'budget'>('tasks')
+  
   useEffect(() => {
     console.log('⚛️ App component mounted')
     
@@ -82,30 +84,39 @@ function App() {
   }, [])
 
   // Render WITHOUT HashRouter - HashRouter causes issues in Telegram
+  // Use state-based navigation instead
   console.log('🧪 VERSION:', VERSION)
+  console.log('🧪 Current page:', currentPage)
   
-  if (VERSION === 'simple') {
-    console.log('🧪 Using SIMPLE version - WITHOUT router')
-    return (
-      <Layout>
-        <TasksPageSimple />
-      </Layout>
-    )
+  const renderPage = () => {
+    if (VERSION === 'simple') {
+      return <TasksPageSimple />
+    }
+    
+    if (VERSION === 'progressive') {
+      return <TasksPageProgressive onNavigate={setCurrentPage} />
+    }
+    
+    return <TasksPage onNavigate={setCurrentPage} />
   }
   
-  if (VERSION === 'progressive') {
-    console.log('🧪 Using PROGRESSIVE version - WITHOUT router')
-    return (
-      <Layout>
-        <TasksPageProgressive />
-      </Layout>
-    )
+  const renderCurrentPage = () => {
+    switch (currentPage) {
+      case 'calendar':
+        return <CalendarPage />
+      case 'meetings':
+        return <MeetingsPage />
+      case 'budget':
+        return <BudgetPage />
+      case 'tasks':
+      default:
+        return renderPage()
+    }
   }
   
-  console.log('🧪 Using FULL version - WITHOUT router')
   return (
     <Layout>
-      <TasksPage />
+      {renderCurrentPage()}
     </Layout>
   )
 

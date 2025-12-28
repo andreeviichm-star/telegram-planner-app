@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom'
 import { CheckSquare, Calendar, Video, Wallet, X } from 'lucide-react'
 import './MenuModal.css'
 
@@ -6,15 +5,16 @@ interface MenuModalProps {
   isOpen: boolean
   onClose: () => void
   currentPath: string
+  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
 }
 
-export default function MenuModal({ isOpen, onClose, currentPath }: MenuModalProps) {
-  const navigate = useNavigate()
-
+export default function MenuModal({ isOpen, onClose, currentPath, onNavigate }: MenuModalProps) {
   if (!isOpen) return null
 
-  const handleNavigate = (path: string) => {
-    navigate(path)
+  const handleNavigate = (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => {
+    if (onNavigate) {
+      onNavigate(page)
+    }
     onClose()
   }
 
@@ -30,8 +30,8 @@ export default function MenuModal({ isOpen, onClose, currentPath }: MenuModalPro
 
         <div className="menu-options">
           <button
-            className={`menu-option ${currentPath === '/' ? 'active' : ''}`}
-            onClick={() => handleNavigate('/')}
+            className={`menu-option ${currentPath === '/' || currentPath === 'tasks' ? 'active' : ''}`}
+            onClick={() => handleNavigate('tasks')}
           >
             <CheckSquare size={24} />
             <div className="menu-option-content">
@@ -41,8 +41,8 @@ export default function MenuModal({ isOpen, onClose, currentPath }: MenuModalPro
           </button>
 
           <button
-            className={`menu-option ${currentPath === '/calendar' ? 'active' : ''}`}
-            onClick={() => handleNavigate('/calendar')}
+            className={`menu-option ${currentPath === '/calendar' || currentPath === 'calendar' ? 'active' : ''}`}
+            onClick={() => handleNavigate('calendar')}
           >
             <Calendar size={24} />
             <div className="menu-option-content">
@@ -52,8 +52,8 @@ export default function MenuModal({ isOpen, onClose, currentPath }: MenuModalPro
           </button>
 
           <button
-            className={`menu-option ${currentPath === '/meetings' ? 'active' : ''}`}
-            onClick={() => handleNavigate('/meetings')}
+            className={`menu-option ${currentPath === '/meetings' || currentPath === 'meetings' ? 'active' : ''}`}
+            onClick={() => handleNavigate('meetings')}
           >
             <Video size={24} />
             <div className="menu-option-content">
@@ -63,8 +63,8 @@ export default function MenuModal({ isOpen, onClose, currentPath }: MenuModalPro
           </button>
 
           <button
-            className={`menu-option ${currentPath === '/budget' ? 'active' : ''}`}
-            onClick={() => handleNavigate('/budget')}
+            className={`menu-option ${currentPath === '/budget' || currentPath === 'budget' ? 'active' : ''}`}
+            onClick={() => handleNavigate('budget')}
           >
             <Wallet size={24} />
             <div className="menu-option-content">

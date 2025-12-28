@@ -2,16 +2,24 @@ import { useState, useEffect } from 'react'
 import { Plus, Filter, Menu } from 'lucide-react'
 import TaskCard from '../components/TaskCard'
 import TaskModal from '../components/TaskModal'
-// import BudgetWidget from '../components/BudgetWidget'
+import FilterModal from '../components/FilterModal'
+import MenuModal from '../components/MenuModal'
+import BudgetWidget from '../components/BudgetWidget'
 import { Task, Priority } from '../types'
 import { getTasks, createTask, updateTask, deleteTask } from '../services/api'
 import './TasksPage.css'
 
-export default function TasksPageProgressive() {
+interface TasksPageProgressiveProps {
+  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+}
+
+export default function TasksPageProgressive({ onNavigate }: TasksPageProgressiveProps = {}) {
   console.log('📋 TasksPageProgressive: Function called')
   
   const [tasks, setTasks] = useState<Task[]>([])
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
+  const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [filter, setFilter] = useState<{ priority?: Priority; status?: string }>({})
 
@@ -92,7 +100,7 @@ export default function TasksPageProgressive() {
       <div className="page-header">
         <button
           className="menu-btn glass-light"
-          onClick={() => console.log('Menu clicked')}
+          onClick={() => setIsMenuModalOpen(true)}
           style={{
             padding: '10px',
             border: 'none',
@@ -107,7 +115,7 @@ export default function TasksPageProgressive() {
         <h1 className="page-title">FLUXPLANNER</h1>
         <button
           className="filter-btn glass-light"
-          onClick={() => console.log('Filter clicked')}
+          onClick={() => setIsFilterModalOpen(true)}
           style={{
             padding: '10px',
             border: 'none',
@@ -140,8 +148,7 @@ export default function TasksPageProgressive() {
         </div>
       </div>
 
-      {/* BudgetWidget - временно отключен для проверки */}
-      {/* <BudgetWidget /> */}
+      <BudgetWidget />
 
       <div className="tasks-list">
         {tasks.length === 0 && (
@@ -192,6 +199,23 @@ export default function TasksPageProgressive() {
             setSelectedTask(null)
           }}
           onSave={handleSaveTask}
+        />
+      )}
+
+      {isFilterModalOpen && (
+        <FilterModal
+          filter={filter}
+          onClose={() => setIsFilterModalOpen(false)}
+          onApply={setFilter}
+        />
+      )}
+
+      {isMenuModalOpen && (
+        <MenuModal
+          isOpen={isMenuModalOpen}
+          onClose={() => setIsMenuModalOpen(false)}
+          currentPath="tasks"
+          onNavigate={onNavigate}
         />
       )}
     </div>
