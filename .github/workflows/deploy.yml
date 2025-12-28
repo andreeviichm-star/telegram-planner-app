@@ -9,9 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
      permissions:
-     contents: write
-     pages: write
-     id-token: 
+      contents: write
+      pages: write
+      id-token: 
     steps:
       - uses: actions/checkout@v3
       
