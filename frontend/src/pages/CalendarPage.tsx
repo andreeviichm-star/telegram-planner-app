@@ -8,7 +8,6 @@ import CalendarEventModal from '../components/CalendarEventModal'
 import MenuModal from '../components/MenuModal'
 import { CalendarEvent } from '../types'
 import { getCalendarEvents, createCalendarEvent, updateCalendarEvent, deleteCalendarEvent } from '../services/api'
-import { logger } from '../utils/logger'
 import './CalendarPage.css'
 
 export default function CalendarPage() {
@@ -31,7 +30,9 @@ export default function CalendarPage() {
       const data = await getCalendarEvents(start, end)
       setEvents(data || [])
     } catch (error) {
-      logger.error('Failed to load events:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to load events:', error)
+      }
       setEvents([])
     }
   }, [currentDate])
@@ -75,7 +76,9 @@ export default function CalendarPage() {
       setSelectedEvent(null)
       loadEvents()
     } catch (error) {
-      logger.error('Failed to save event:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to save event:', error)
+      }
     }
   }
 
@@ -84,7 +87,9 @@ export default function CalendarPage() {
       await deleteCalendarEvent(id)
       loadEvents()
     } catch (error) {
-      logger.error('Failed to delete event:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to delete event:', error)
+      }
     }
   }
 

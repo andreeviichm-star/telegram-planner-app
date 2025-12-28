@@ -6,7 +6,6 @@ import MeetingModal from '../components/MeetingModal'
 import MenuModal from '../components/MenuModal'
 import { Meeting, MeetingPlatform } from '../types'
 import { getMeetings, createMeeting, updateMeeting, deleteMeeting } from '../services/api'
-import { logger } from '../utils/logger'
 import './MeetingsPage.css'
 
 export default function MeetingsPage() {
@@ -20,23 +19,16 @@ export default function MeetingsPage() {
     loadMeetings()
   }, [loadMeetings])
 
-  useEffect(() => {
-    // Проверка уведомлений для созвонов
-    const checkNotifications = async () => {
-      if (meetings.length > 0) {
-        const { checkMeetingNotifications } = await import('../services/notifications')
-        await checkMeetingNotifications(meetings)
-      }
-    }
-    checkNotifications()
-  }, [meetings])
+  // Removed notification check to avoid dynamic import issues
 
   const loadMeetings = useCallback(async () => {
     try {
       const data = await getMeetings()
       setMeetings(data || [])
     } catch (error) {
-      logger.error('Failed to load meetings:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to load meetings:', error)
+      }
       setMeetings([])
     }
   }, [])
@@ -62,7 +54,9 @@ export default function MeetingsPage() {
       setSelectedMeeting(null)
       loadMeetings()
     } catch (error) {
-      logger.error('Failed to save meeting:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to save meeting:', error)
+      }
     }
   }
 
@@ -71,7 +65,9 @@ export default function MeetingsPage() {
       await deleteMeeting(id)
       loadMeetings()
     } catch (error) {
-      logger.error('Failed to delete meeting:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to delete meeting:', error)
+      }
     }
   }
 

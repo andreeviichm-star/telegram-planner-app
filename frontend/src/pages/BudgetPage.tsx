@@ -6,7 +6,6 @@ import TransactionModal from '../components/TransactionModal'
 import MenuModal from '../components/MenuModal'
 import { BudgetTransaction, TransactionType } from '../types'
 import { getTransactions, createTransaction, updateTransaction, deleteTransaction } from '../services/api'
-import { logger } from '../utils/logger'
 import './BudgetPage.css'
 
 export default function BudgetPage() {
@@ -26,7 +25,9 @@ export default function BudgetPage() {
       const data = await getTransactions()
       setTransactions(data || [])
     } catch (error) {
-      logger.error('Failed to load transactions:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to load transactions:', error)
+      }
       setTransactions([])
     }
   }, [])
@@ -54,7 +55,9 @@ export default function BudgetPage() {
       setSelectedTransaction(null)
       loadTransactions()
     } catch (error) {
-      logger.error('Failed to save transaction:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to save transaction:', error)
+      }
     }
   }
 
@@ -63,7 +66,9 @@ export default function BudgetPage() {
       await deleteTransaction(id)
       loadTransactions()
     } catch (error) {
-      logger.error('Failed to delete transaction:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to delete transaction:', error)
+      }
     }
   }
 

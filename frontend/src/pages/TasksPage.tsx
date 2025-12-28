@@ -8,7 +8,6 @@ import MenuModal from '../components/MenuModal'
 import BudgetWidget from '../components/BudgetWidget'
 import { Task, Priority } from '../types'
 import { getTasks, createTask, updateTask, deleteTask } from '../services/api'
-import { logger } from '../utils/logger'
 import './TasksPage.css'
 
 export default function TasksPage() {
@@ -24,23 +23,16 @@ export default function TasksPage() {
     loadTasks()
   }, [loadTasks])
 
-  useEffect(() => {
-    // Проверка уведомлений для задач
-    const checkNotifications = async () => {
-      if (tasks.length > 0) {
-        const { checkTaskNotifications } = await import('../services/notifications')
-        await checkTaskNotifications(tasks)
-      }
-    }
-    checkNotifications()
-  }, [tasks])
+  // Removed notification check to avoid dynamic import issues
 
   const loadTasks = useCallback(async () => {
     try {
       const data = await getTasks(filter)
       setTasks(data || [])
     } catch (error) {
-      logger.error('Failed to load tasks:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to load tasks:', error)
+      }
       setTasks([])
     }
   }, [filter])
@@ -66,7 +58,9 @@ export default function TasksPage() {
       setSelectedTask(null)
       loadTasks()
     } catch (error) {
-      logger.error('Failed to save task:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to save task:', error)
+      }
     }
   }
 
@@ -75,7 +69,9 @@ export default function TasksPage() {
       await deleteTask(id)
       loadTasks()
     } catch (error) {
-      logger.error('Failed to delete task:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to delete task:', error)
+      }
     }
   }
 
@@ -86,15 +82,6 @@ export default function TasksPage() {
     totalTime: tasks.reduce((sum, t) => sum + (t.estimatedTime || 0), 0)
   }
 
-  // Debug: check if component is rendering
-  useEffect(() => {
-    if (import.meta.env.DEV) {
-      logger.info('TasksPage rendering', {
-        tasksCount: tasks.length,
-        hasFilter: !!filter,
-      })
-    }
-  }, [tasks, filter])
 
   return (
     <div className="tasks-page">

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Task, CalendarEvent, Meeting, BudgetTransaction } from '../types'
-import { logger } from '../utils/logger'
 
 /**
  * Normalize API URL - ensure it ends with /api

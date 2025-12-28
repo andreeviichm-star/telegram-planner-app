@@ -3,7 +3,6 @@ import { TrendingUp, TrendingDown, Wallet } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { getTransactions } from '../services/api'
 import { BudgetTransaction } from '../types'
-import { logger } from '../utils/logger'
 import './BudgetWidget.css'
 
 export default function BudgetWidget() {
@@ -20,7 +19,9 @@ export default function BudgetWidget() {
       const data = await getTransactions()
       setTransactions(data || [])
     } catch (error) {
-      logger.error('Failed to load transactions:', error)
+      if (import.meta.env.DEV) {
+        console.error('Failed to load transactions:', error)
+      }
       setTransactions([])
     } finally {
       setLoading(false)
