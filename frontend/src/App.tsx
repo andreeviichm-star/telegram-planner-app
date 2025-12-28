@@ -22,12 +22,16 @@ declare global {
 function App() {
   useEffect(() => {
     // Используем Telegram WebApp API напрямую
-    if (window.Telegram?.WebApp) {
-      const tg = window.Telegram.WebApp
-      tg.ready()
-      tg.expand()
-      tg.setHeaderColor('#0a0e27')
-      tg.setBackgroundColor('#0a0e27')
+    try {
+      if (window.Telegram?.WebApp) {
+        const tg = window.Telegram.WebApp
+        tg.ready()
+        tg.expand()
+        tg.setHeaderColor('#0a0e27')
+        tg.setBackgroundColor('#0a0e27')
+      }
+    } catch (error) {
+      console.error('Telegram WebApp error:', error)
     }
   }, [])
 
