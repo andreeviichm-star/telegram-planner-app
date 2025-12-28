@@ -43,12 +43,14 @@ export const initTelegramWebApp = (): void => {
   }
 
   // Check if Telegram WebApp is already available
-  if (window.Telegram?.WebApp) {
+  if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
     init(window.Telegram.WebApp)
     return
   }
 
-  // Wait for Telegram WebApp to load
+  // Wait for Telegram WebApp to load (for cases when script loads after our code)
+  if (typeof window === 'undefined') return
+
   let attempts = 0
   const maxAttempts = INIT_TIMEOUT / CHECK_INTERVAL
 

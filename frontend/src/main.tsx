@@ -22,10 +22,18 @@ if (!rootElement) {
     </div>
   `
 } else {
+  // Render immediately - don't wait for anything
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
   )
+  
+  // Debug info for Telegram
+  if (import.meta.env.DEV) {
+    console.log('React app rendered to root element')
+    console.log('Base path:', import.meta.env.VITE_BASE_PATH)
+    console.log('Current URL:', window.location.href)
+  }
 }
 

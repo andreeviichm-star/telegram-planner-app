@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
+import { AppRouter } from './utils/router'
 import Layout from './components/Layout'
 import TasksPage from './pages/TasksPage'
 import CalendarPage from './pages/CalendarPage'
@@ -16,12 +17,8 @@ function App() {
       isTelegram: isTelegram(),
     })
 
-    // Initialize Telegram WebApp
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initTelegramWebApp)
-    } else {
-      initTelegramWebApp()
-    }
+    // Initialize Telegram WebApp immediately
+    initTelegramWebApp()
 
     // Global error handlers (only in development)
     if (import.meta.env.DEV) {
@@ -49,7 +46,7 @@ function App() {
   }, [])
 
   return (
-    <Router>
+    <AppRouter>
       <Layout>
         <Routes>
           <Route path="/" element={<TasksPage />} />
@@ -58,7 +55,7 @@ function App() {
           <Route path="/budget" element={<BudgetPage />} />
         </Routes>
       </Layout>
-    </Router>
+    </AppRouter>
   )
 }
 

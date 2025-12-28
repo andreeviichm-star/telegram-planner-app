@@ -1,14 +1,18 @@
 .layout {
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   min-height: 100vh;
   padding-bottom: 20px;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .main-content {
   flex: 1;
   padding: 16px;
   max-width: 100%;
+  display: block !important;
+  visibility: visible !important;
 }
 
 .bottom-nav {
