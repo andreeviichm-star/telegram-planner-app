@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend
-          package-lock.json
+          npm install
       
       - name: Build
         run: |
