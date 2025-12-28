@@ -9,26 +9,31 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   useEffect(() => {
     // Force layout to be visible in Telegram
-    const layout = document.querySelector('.layout')
-    const mainContent = document.querySelector('.main-content')
+    const layout = document.querySelector('.layout') as HTMLElement
+    const mainContent = document.querySelector('.main-content') as HTMLElement
     
-    if (layout && import.meta.env.DEV) {
-      logger.info('Layout mounted', {
-        layoutExists: !!layout,
-        mainContentExists: !!mainContent,
-        layoutDisplay: window.getComputedStyle(layout).display,
-        layoutVisibility: window.getComputedStyle(layout).visibility,
-      })
-    }
-    
-    // Ensure layout is visible
     if (layout) {
-      const style = window.getComputedStyle(layout)
-      if (style.display === 'none' || style.visibility === 'hidden') {
-        console.warn('Layout is hidden! Forcing visibility...')
-        ;(layout as HTMLElement).style.display = 'flex'
-        ;(layout as HTMLElement).style.visibility = 'visible'
+      // Force visibility immediately
+      layout.style.display = 'flex'
+      layout.style.visibility = 'visible'
+      layout.style.opacity = '1'
+      layout.style.minHeight = '100vh'
+      
+      if (mainContent) {
+        mainContent.style.display = 'block'
+        mainContent.style.visibility = 'visible'
       }
+      
+      if (import.meta.env.DEV) {
+        logger.info('Layout mounted and forced visible', {
+          layoutExists: !!layout,
+          mainContentExists: !!mainContent,
+          layoutDisplay: window.getComputedStyle(layout).display,
+          layoutVisibility: window.getComputedStyle(layout).visibility,
+        })
+      }
+    } else {
+      console.error('Layout element not found!')
     }
   }, [])
 

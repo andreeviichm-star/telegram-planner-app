@@ -86,9 +86,19 @@ export default function TasksPage() {
     totalTime: tasks.reduce((sum, t) => sum + (t.estimatedTime || 0), 0)
   }
 
+  // Debug: check if component is rendering
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      logger.info('TasksPage rendering', {
+        tasksCount: tasks.length,
+        hasFilter: !!filter,
+      })
+    }
+  }, [tasks, filter])
+
   return (
-    <div className="tasks-page">
-      <div className="page-header">
+    <div className="tasks-page" style={{ display: 'block', visibility: 'visible', opacity: 1 }}>
+      <div className="page-header" style={{ display: 'flex', visibility: 'visible' }}>
         <button
           className="menu-btn glass-light"
           onClick={() => setIsMenuModalOpen(true)}

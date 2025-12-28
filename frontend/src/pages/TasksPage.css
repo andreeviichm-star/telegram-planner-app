@@ -1,13 +1,18 @@
 .tasks-page {
   padding-bottom: 20px;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-height: 100vh;
 }
 
 .page-header {
-  display: flex;
+  display: flex !important;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   gap: 12px;
+  visibility: visible !important;
 }
 
 .menu-btn {
@@ -30,15 +35,14 @@
 .page-title {
   flex: 1;
   text-align: center;
-}
-
-.page-title {
   font-size: 28px;
   font-weight: 700;
   background: linear-gradient(135deg, #4a90e2 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  visibility: visible !important;
+  display: block !important;
 }
 
 .filter-btn {

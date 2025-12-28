@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
+import { debugTelegram } from './utils/telegramDebug'
 
 const rootElement = document.getElementById('root')
 
@@ -22,18 +23,34 @@ if (!rootElement) {
     </div>
   `
 } else {
-  // Render immediately - don't wait for anything
-  ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  )
-  
-  // Debug info for Telegram
-  if (import.meta.env.DEV) {
-    console.log('React app rendered to root element')
-    console.log('Base path:', import.meta.env.VITE_BASE_PATH)
-    console.log('Current URL:', window.location.href)
+  // Render immediately
+  try {
+    ReactDOM.createRoot(rootElement).render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    )
+    
+    // Debug after a short delay to allow React to render
+    setTimeout(() => {
+      debugTelegram()
+    }, 100)
+  } catch (error) {
+    console.error('Failed to render React app:', error)
+    rootElement.innerHTML = `
+      <div style="
+        padding: 20px; 
+        color: white; 
+        background: #0a0e27; 
+        min-height: 100vh; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-family: system-ui;
+      ">
+        Ошибка рендеринга: ${error instanceof Error ? error.message : 'Unknown error'}
+      </div>
+    `
   }
 }
 
