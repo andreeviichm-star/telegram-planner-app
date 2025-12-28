@@ -66,6 +66,20 @@ export default function Layout({ children }: LayoutProps) {
         mainContent.style.setProperty('display', 'block', 'important')
         mainContent.style.setProperty('visibility', 'visible', 'important')
         mainContent.style.setProperty('width', '100%', 'important')
+        mainContent.style.setProperty('opacity', '1', 'important')
+        mainContent.style.setProperty('min-height', '100vh', 'important')
+        mainContent.style.setProperty('background', '#0a0e27', 'important')
+      }
+      
+      // Also check for tasks-page directly
+      const tasksPage = document.querySelector('.tasks-page')
+      if (tasksPage) {
+        console.log('📐 Layout: Found tasks-page element, forcing visibility')
+        ;(tasksPage as HTMLElement).style.setProperty('display', 'block', 'important')
+        ;(tasksPage as HTMLElement).style.setProperty('visibility', 'visible', 'important')
+        ;(tasksPage as HTMLElement).style.setProperty('opacity', '1', 'important')
+        ;(tasksPage as HTMLElement).style.setProperty('width', '100%', 'important')
+        ;(tasksPage as HTMLElement).style.setProperty('min-height', '100vh', 'important')
       }
     }, 200)
   }, [children])

@@ -80,16 +80,20 @@ function App() {
   // TEST: Render TasksPage directly without router to check if router is the issue
   // If this works, the problem is with HashRouter in Telegram
   console.log('🧪 Testing: Rendering TasksPage directly without router')
+  console.log('🧪 USE_SIMPLE_VERSION:', USE_SIMPLE_VERSION)
   
   if (USE_SIMPLE_VERSION) {
     console.log('🧪 Using SIMPLE version for testing')
+    const simpleElement = <TasksPageSimple />
+    console.log('🧪 Simple element created:', simpleElement)
     return (
       <Layout>
-        <TasksPageSimple />
+        {simpleElement}
       </Layout>
     )
   }
   
+  console.log('🧪 Using FULL version')
   return (
     <Layout>
       <TasksPage />
