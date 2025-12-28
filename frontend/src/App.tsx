@@ -81,53 +81,32 @@ function App() {
     console.log('🔗 Pathname:', window.location.pathname)
   }, [])
 
-  // Render with HashRouter - needed for navigation in components like BudgetWidget
+  // Render WITHOUT HashRouter - HashRouter causes issues in Telegram
   console.log('🧪 VERSION:', VERSION)
   
   if (VERSION === 'simple') {
-    console.log('🧪 Using SIMPLE version')
+    console.log('🧪 Using SIMPLE version - WITHOUT router')
     return (
-      <HashRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<TasksPageSimple />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/meetings" element={<MeetingsPage />} />
-            <Route path="/budget" element={<BudgetPage />} />
-          </Routes>
-        </Layout>
-      </HashRouter>
+      <Layout>
+        <TasksPageSimple />
+      </Layout>
     )
   }
   
   if (VERSION === 'progressive') {
-    console.log('🧪 Using PROGRESSIVE version')
+    console.log('🧪 Using PROGRESSIVE version - WITHOUT router')
     return (
-      <HashRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<TasksPageProgressive />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/meetings" element={<MeetingsPage />} />
-            <Route path="/budget" element={<BudgetPage />} />
-          </Routes>
-        </Layout>
-      </HashRouter>
+      <Layout>
+        <TasksPageProgressive />
+      </Layout>
     )
   }
   
-  console.log('🧪 Using FULL version')
+  console.log('🧪 Using FULL version - WITHOUT router')
   return (
-    <HashRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<TasksPage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/meetings" element={<MeetingsPage />} />
-          <Route path="/budget" element={<BudgetPage />} />
-        </Routes>
-      </Layout>
-    </HashRouter>
+    <Layout>
+      <TasksPage />
+    </Layout>
   )
 
   // Original code with router (commented out for testing)
