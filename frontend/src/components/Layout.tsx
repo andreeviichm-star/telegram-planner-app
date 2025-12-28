@@ -1,5 +1,4 @@
 import { ReactNode, useEffect } from 'react'
-import React from 'react'
 import './Layout.css'
 
 interface LayoutProps {
@@ -75,12 +74,12 @@ export default function Layout({ children }: LayoutProps) {
   }, [children])
 
   console.log('📐 Layout: About to return JSX with children')
-  console.log('📐 Layout: children is React element?', React.isValidElement(children))
   
+  // Simple render - don't check isValidElement as it might cause issues
   return (
     <div className="layout">
       <main className="main-content">
-        {React.isValidElement(children) ? children : <div style={{ padding: '20px', color: 'red', background: 'yellow' }}>Children is not a valid React element!</div>}
+        {children}
       </main>
     </div>
   )
