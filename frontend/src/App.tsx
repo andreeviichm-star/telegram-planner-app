@@ -2,10 +2,14 @@ import { useEffect } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import TasksPage from './pages/TasksPage'
+import TasksPageSimple from './pages/TasksPageSimple'
 import CalendarPage from './pages/CalendarPage'
 import MeetingsPage from './pages/MeetingsPage'
 import BudgetPage from './pages/BudgetPage'
 import './App.css'
+
+// TEST: Use simple version to check if complex components cause issues
+const USE_SIMPLE_VERSION = true // Set to true to test simple version
 
 // Initialize Telegram WebApp outside of component to avoid initialization issues
 if (typeof window !== 'undefined') {
@@ -76,6 +80,15 @@ function App() {
   // TEST: Render TasksPage directly without router to check if router is the issue
   // If this works, the problem is with HashRouter in Telegram
   console.log('🧪 Testing: Rendering TasksPage directly without router')
+  
+  if (USE_SIMPLE_VERSION) {
+    console.log('🧪 Using SIMPLE version for testing')
+    return (
+      <Layout>
+        <TasksPageSimple />
+      </Layout>
+    )
+  }
   
   return (
     <Layout>

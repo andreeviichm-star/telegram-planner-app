@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Plus, Filter, Menu } from 'lucide-react'
 import TaskCard from '../components/TaskCard'
 import TaskModal from '../components/TaskModal'
@@ -11,63 +11,30 @@ import './TasksPage.css'
 
 export default function TasksPage() {
   console.log('📋 TasksPage function called - component is rendering!')
-  console.log('📋 TasksPage: About to return JSX')
   
   const [tasks, setTasks] = useState<Task[]>([])
-  
-  useEffect(() => {
-    console.log('📋 TasksPage mounted (useEffect)')
-    
-    // Force visibility check
-    setTimeout(() => {
-      const tasksPage = document.querySelector('.tasks-page')
-      const pageHeader = document.querySelector('.page-header')
-      const pageTitle = document.querySelector('.page-title')
-      
-      console.log('📋 TasksPage elements:', {
-        tasksPage: !!tasksPage,
-        pageHeader: !!pageHeader,
-        pageTitle: !!pageTitle,
-        tasksPageDisplay: tasksPage ? window.getComputedStyle(tasksPage).display : 'N/A',
-        tasksPageVisibility: tasksPage ? window.getComputedStyle(tasksPage).visibility : 'N/A',
-        tasksPageOpacity: tasksPage ? window.getComputedStyle(tasksPage).opacity : 'N/A',
-        tasksPageWidth: tasksPage ? window.getComputedStyle(tasksPage).width : 'N/A',
-        tasksPageHeight: tasksPage ? window.getComputedStyle(tasksPage).height : 'N/A',
-      })
-      
-      // Force visibility if hidden
-      if (tasksPage) {
-        const style = window.getComputedStyle(tasksPage)
-        if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) {
-          console.warn('⚠️ TasksPage is hidden! Forcing visibility...')
-          ;(tasksPage as HTMLElement).style.setProperty('display', 'block', 'important')
-          ;(tasksPage as HTMLElement).style.setProperty('visibility', 'visible', 'important')
-          ;(tasksPage as HTMLElement).style.setProperty('opacity', '1', 'important')
-        }
-      }
-    }, 1000)
-  }, [])
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [filter, setFilter] = useState<{ priority?: Priority; status?: string }>({})
 
-  const loadTasks = useCallback(async () => {
-    try {
-      const data = await getTasks(filter)
-      setTasks(data || [])
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        console.error('Failed to load tasks:', error)
-      }
-      setTasks([])
-    }
-  }, [filter])
-
   useEffect(() => {
+    console.log('📋 TasksPage mounted')
+    
+    // Simple load tasks
+    const loadTasks = async () => {
+      try {
+        const data = await getTasks(filter)
+        setTasks(data || [])
+      } catch (error) {
+        console.error('Failed to load tasks:', error)
+        setTasks([])
+      }
+    }
+    
     loadTasks()
-  }, [loadTasks])
+  }, [filter])
 
   const handleCreateTask = () => {
     setSelectedTask(null)
@@ -88,22 +55,22 @@ export default function TasksPage() {
       }
       setIsTaskModalOpen(false)
       setSelectedTask(null)
-      loadTasks()
+      // Reload tasks
+      const data = await getTasks(filter)
+      setTasks(data || [])
     } catch (error) {
-      if (import.meta.env.DEV) {
-        console.error('Failed to save task:', error)
-      }
+      console.error('Failed to save task:', error)
     }
   }
 
   const handleDeleteTask = async (id: string) => {
     try {
       await deleteTask(id)
-      loadTasks()
+      // Reload tasks
+      const data = await getTasks(filter)
+      setTasks(data || [])
     } catch (error) {
-      if (import.meta.env.DEV) {
-        console.error('Failed to delete task:', error)
-      }
+      console.error('Failed to delete task:', error)
     }
   }
 
@@ -113,7 +80,6 @@ export default function TasksPage() {
     inProgress: tasks.filter(t => t.status === 'in_progress').length,
     totalTime: tasks.reduce((sum, t) => sum + (t.estimatedTime || 0), 0)
   }
-
 
   console.log('📋 TasksPage: Returning JSX now')
   
@@ -132,6 +98,7 @@ export default function TasksPage() {
       }}>
         TEST: TasksPage rendered
       </div>
+      
       <div className="page-header">
         <button
           className="menu-btn glass-light"
@@ -219,4 +186,3 @@ export default function TasksPage() {
     </div>
   )
 }
-
