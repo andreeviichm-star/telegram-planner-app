@@ -6,23 +6,27 @@ import CalendarPage from './pages/CalendarPage'
 import MeetingsPage from './pages/MeetingsPage'
 import BudgetPage from './pages/BudgetPage'
 import { initTelegramWebApp, isTelegram } from './utils/telegram'
-import { logger } from './utils/logger'
 import './App.css'
 
 function App() {
   useEffect(() => {
-    logger.info('App mounted', {
-      url: window.location.href,
-      isTelegram: isTelegram(),
-    })
-
     // Initialize Telegram WebApp immediately
     initTelegramWebApp()
+    
+    // Log only in dev mode and after initialization
+    if (import.meta.env.DEV) {
+      setTimeout(() => {
+        console.log('App mounted', {
+          url: window.location.href,
+          isTelegram: isTelegram(),
+        })
+      }, 0)
+    }
 
     // Global error handlers (only in development)
     if (import.meta.env.DEV) {
       const handleError = (event: ErrorEvent) => {
-        logger.error('Resource loading error:', {
+        console.error('Resource loading error:', {
           message: event.message,
           filename: event.filename,
           lineno: event.lineno,
@@ -31,7 +35,7 @@ function App() {
       }
 
       const handleRejection = (event: PromiseRejectionEvent) => {
-        logger.error('Unhandled promise rejection:', event.reason)
+        console.error('Unhandled promise rejection:', event.reason)
       }
 
       window.addEventListener('error', handleError, true)

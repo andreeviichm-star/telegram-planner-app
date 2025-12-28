@@ -25,11 +25,8 @@ if (!rootElement) {
 } else {
   // Render immediately
   try {
-    ReactDOM.createRoot(rootElement).render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    )
+    // Remove StrictMode to avoid double rendering issues
+    ReactDOM.createRoot(rootElement).render(<App />)
     
     // Debug after a short delay to allow React to render
     setTimeout(() => {

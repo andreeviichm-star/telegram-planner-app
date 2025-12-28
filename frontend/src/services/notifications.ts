@@ -1,18 +1,17 @@
 import axios from 'axios'
 import { Task, Meeting } from '../types'
-import { logger } from '../utils/logger'
 
-// Use the same API instance from api.ts
-// Import it to avoid duplication
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+// Normalize API URL
 const normalizeApiUrl = (url: string): string => {
   if (!url) return 'http://localhost:3001/api'
   if (url.endsWith('/api')) return url
   return url.endsWith('/') ? `${url}api` : `${url}/api`
 }
 
+const API_URL = normalizeApiUrl(import.meta.env.VITE_API_URL || 'http://localhost:3001/api')
+
 const api = axios.create({
-  baseURL: normalizeApiUrl(API_URL),
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -74,9 +73,13 @@ async function createTaskNotification(task: Task): Promise<void> {
       scheduledAt: scheduledAt.toISOString()
     })
     
-    logger.info(`Notification scheduled for task: ${task.title}`)
+    if (import.meta.env.DEV) {
+      console.log(`Notification scheduled for task: ${task.title}`)
+    }
   } catch (error) {
-    logger.error('Error creating task notification:', error)
+    if (import.meta.env.DEV) {
+      console.error('Error creating task notification:', error)
+    }
   }
 }
 
@@ -93,9 +96,13 @@ async function createMeetingNotification(meeting: Meeting): Promise<void> {
       scheduledAt: scheduledAt.toISOString()
     })
     
-    logger.info(`Notification scheduled for meeting: ${meeting.title}`)
+    if (import.meta.env.DEV) {
+      console.log(`Notification scheduled for meeting: ${meeting.title}`)
+    }
   } catch (error) {
-    logger.error('Error creating meeting notification:', error)
+    if (import.meta.env.DEV) {
+      console.error('Error creating meeting notification:', error)
+    }
   }
 }
 
@@ -113,7 +120,9 @@ export function startNotificationChecker(
       const meetings = await getMeetings()
       await checkMeetingNotifications(meetings)
     } catch (error) {
-      logger.error('Error checking notifications:', error)
+      if (import.meta.env.DEV) {
+        console.error('Error checking notifications:', error)
+      }
     }
   }, 30 * 60 * 1000) // 30 минут
 }
