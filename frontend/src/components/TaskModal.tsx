@@ -1,5 +1,5 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from 'react'
-import { Clock, Users, FileText, Calendar } from 'lucide-react'
+import { useState, useEffect, FormEvent } from 'react'
+import { Calendar } from 'lucide-react'
 import { Task, Priority } from '../types'
 import './TaskModal.css'
 
@@ -20,19 +20,14 @@ export default function TaskModal({ task, onSave, onClose }: TaskModalProps) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [priority, setPriority] = useState<Priority>('medium')
-  const [estimatedTime, setEstimatedTime] = useState('')
-  const [delegatedTo, setDelegatedTo] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [status, setStatus] = useState<'pending' | 'in_progress' | 'completed'>('pending')
-  const [documents, setDocuments] = useState<File[]>([])
 
   useEffect(() => {
     if (task) {
       setTitle(task.title)
       setDescription(task.description || '')
       setPriority(task.priority)
-      setEstimatedTime(task.estimatedTime?.toString() || '')
-      setDelegatedTo(task.delegatedTo || '')
       setDueDate(task.dueDate || '')
       setStatus(task.status)
     }
@@ -44,18 +39,9 @@ export default function TaskModal({ task, onSave, onClose }: TaskModalProps) {
       title,
       description,
       priority,
-      estimatedTime: estimatedTime ? parseInt(estimatedTime) : undefined,
-      delegatedTo: delegatedTo || undefined,
       dueDate: dueDate || undefined,
       status,
-      documents: documents.map(f => ({ name: f.name, url: URL.createObjectURL(f) }))
     })
-  }
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setDocuments(Array.from(e.target.files))
-    }
   }
 
   return (
@@ -120,65 +106,16 @@ export default function TaskModal({ task, onSave, onClose }: TaskModalProps) {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label>
-                <Clock size={14} /> Время (часы)
-              </label>
-              <input
-                type="number"
-                value={estimatedTime}
-                onChange={e => setEstimatedTime(e.target.value)}
-                min="0"
-                className="form-input"
-              />
-            </div>
-
-            <div className="form-group">
-              <label>
-                <Calendar size={14} /> Срок
-              </label>
-              <input
-                type="date"
-                value={dueDate}
-                onChange={e => setDueDate(e.target.value)}
-                className="form-input"
-              />
-            </div>
-          </div>
-
           <div className="form-group">
             <label>
-              <Users size={14} /> Делегировать
+              <Calendar size={14} /> Срок
             </label>
             <input
-              type="text"
-              value={delegatedTo}
-              onChange={e => setDelegatedTo(e.target.value)}
-              placeholder="Имя пользователя"
+              type="date"
+              value={dueDate}
+              onChange={e => setDueDate(e.target.value)}
               className="form-input"
             />
-          </div>
-
-          <div className="form-group">
-            <label>
-              <FileText size={14} /> Документы
-            </label>
-            <input
-              type="file"
-              multiple
-              onChange={handleFileChange}
-              className="form-input"
-            />
-            {documents.length > 0 && (
-              <div className="documents-list">
-                {documents.map((doc, i) => (
-                  <span key={i} className="document-tag">
-                    {doc.name}
-                  </span>
-                ))}
-              </div>
-            )}
           </div>
 
           <div className="modal-actions">
