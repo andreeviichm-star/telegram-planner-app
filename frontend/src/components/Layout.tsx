@@ -8,38 +8,37 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   useEffect(() => {
-    // Force layout to be visible in Telegram
-    const layout = document.querySelector('.layout') as HTMLElement
-    const mainContent = document.querySelector('.main-content') as HTMLElement
-    
-    if (layout) {
-      // Force visibility immediately
-      layout.style.display = 'flex'
-      layout.style.visibility = 'visible'
-      layout.style.opacity = '1'
-      layout.style.minHeight = '100vh'
+    // Debug: check if children are rendering
+    if (import.meta.env.DEV) {
+      logger.info('Layout mounted', {
+        hasChildren: !!children,
+        childrenType: typeof children,
+      })
       
-      if (mainContent) {
-        mainContent.style.display = 'block'
-        mainContent.style.visibility = 'visible'
-      }
-      
-      if (import.meta.env.DEV) {
-        logger.info('Layout mounted and forced visible', {
+      // Check after a short delay to allow React to render
+      setTimeout(() => {
+        const layout = document.querySelector('.layout')
+        const mainContent = document.querySelector('.main-content')
+        logger.info('Layout elements check', {
           layoutExists: !!layout,
           mainContentExists: !!mainContent,
-          layoutDisplay: window.getComputedStyle(layout).display,
-          layoutVisibility: window.getComputedStyle(layout).visibility,
+          mainContentChildren: mainContent?.children.length || 0,
+          mainContentHTML: mainContent?.innerHTML.substring(0, 100),
         })
-      }
-    } else {
-      console.error('Layout element not found!')
+      }, 200)
     }
-  }, [])
+  }, [children])
+
+  // Debug: log children
+  if (import.meta.env.DEV) {
+    console.log('Layout render - children:', children)
+  }
 
   return (
     <div className="layout">
-      <main className="main-content">{children}</main>
+      <main className="main-content">
+        {children || <div style={{ padding: '20px', color: 'white' }}>No children rendered!</div>}
+      </main>
     </div>
   )
 }

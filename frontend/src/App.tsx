@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { AppRouter } from './utils/router'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import TasksPage from './pages/TasksPage'
 import CalendarPage from './pages/CalendarPage'
@@ -45,8 +44,13 @@ function App() {
     }
   }, [])
 
+  // Debug: check if routes are working
+  if (import.meta.env.DEV) {
+    logger.info('App render - HashRouter setup')
+  }
+
   return (
-    <AppRouter>
+    <HashRouter>
       <Layout>
         <Routes>
           <Route path="/" element={<TasksPage />} />
@@ -55,7 +59,7 @@ function App() {
           <Route path="/budget" element={<BudgetPage />} />
         </Routes>
       </Layout>
-    </AppRouter>
+    </HashRouter>
   )
 }
 
