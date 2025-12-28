@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FLUXPLANNER</title>
+    <script>
+      // Перенаправление на index.html для SPA routing
+      sessionStorage.redirect = location.href;
+      location.replace(location.pathname.split('/').slice(0, -1).join('/') + '/index.html');
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/telegram-planner-app/" />
+    </noscript>
+  </body>
+</html>
+

@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'production' ? '/telegram-planner-app/' : '/',
+  base: process.env.VITE_BASE_PATH || '/',
   server: {
     port: 3000,
     host: true,

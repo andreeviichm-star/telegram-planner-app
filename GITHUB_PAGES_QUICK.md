@@ -63,6 +63,7 @@ jobs:
           npm run build
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_BASE_PATH: /telegram-planner-app/
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
