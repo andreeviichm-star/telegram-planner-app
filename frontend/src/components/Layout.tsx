@@ -1,4 +1,5 @@
 import { ReactNode, useEffect } from 'react'
+import React from 'react'
 import './Layout.css'
 
 interface LayoutProps {
@@ -10,7 +11,21 @@ export default function Layout({ children }: LayoutProps) {
     hasChildren: !!children,
     childrenType: typeof children,
     childrenValue: children,
+    childrenString: String(children).substring(0, 200),
+    isReactElement: React.isValidElement(children),
   })
+  
+  // Force render children
+  if (!children) {
+    console.error('❌ Layout: No children provided!')
+    return (
+      <div className="layout">
+        <main className="main-content">
+          <div style={{ padding: '20px', color: 'white' }}>No children in Layout!</div>
+        </main>
+      </div>
+    )
+  }
   
   useEffect(() => {
     console.log('📐 Layout mounted (useEffect)', {
@@ -59,9 +74,14 @@ export default function Layout({ children }: LayoutProps) {
     }, 200)
   }, [children])
 
+  console.log('📐 Layout: About to return JSX with children')
+  console.log('📐 Layout: children is React element?', React.isValidElement(children))
+  
   return (
     <div className="layout">
-      <main className="main-content">{children}</main>
+      <main className="main-content">
+        {React.isValidElement(children) ? children : <div style={{ padding: '20px', color: 'red', background: 'yellow' }}>Children is not a valid React element!</div>}
+      </main>
     </div>
   )
 }

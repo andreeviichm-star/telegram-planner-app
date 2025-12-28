@@ -11,6 +11,7 @@ import './TasksPage.css'
 
 export default function TasksPage() {
   console.log('📋 TasksPage function called - component is rendering!')
+  console.log('📋 TasksPage: About to return JSX')
   
   const [tasks, setTasks] = useState<Task[]>([])
   
@@ -114,8 +115,10 @@ export default function TasksPage() {
   }
 
 
+  console.log('📋 TasksPage: Returning JSX now')
+  
   return (
-    <div className="tasks-page">
+    <div className="tasks-page" data-testid="tasks-page">
       {/* Debug test element */}
       <div style={{
         position: 'fixed',
