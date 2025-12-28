@@ -6,7 +6,15 @@ export default defineConfig({
   base: '/',
   server: {
     port: 3000,
-    host: true
+    host: true,
+    hmr: {
+      clientPort: 443
+    },
+    allowedHosts: [
+      '.ngrok-free.app',
+      '.ngrok.io',
+      '.ngrok.app'
+    ]
   },
   build: {
     outDir: 'dist',

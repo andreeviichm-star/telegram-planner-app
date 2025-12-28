@@ -1,0 +1,138 @@
+.budget-page {
+  padding-bottom: 20px;
+}
+
+.budget-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.budget-stat-card {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.budget-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.budget-stat-icon.income {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.budget-stat-icon.expense {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.budget-stat-icon.balance {
+  background: rgba(139, 92, 246, 0.2);
+  color: var(--accent-purple);
+}
+
+.budget-stat-icon.fundraising {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.budget-stat-content {
+  flex: 1;
+}
+
+.budget-stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.budget-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.budget-stat-value.income {
+  color: #22c55e;
+}
+
+.budget-stat-value.expense {
+  color: #ef4444;
+}
+
+.budget-stat-value.fundraising {
+  color: #fbbf24;
+}
+
+.transaction-actions {
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.transaction-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s;
+}
+
+.transaction-btn:active {
+  transform: scale(0.95);
+}
+
+.income-btn {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+}
+
+.expense-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.fundraising-btn {
+  background: var(--gradient-purple);
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.empty-hint {
+  font-size: 14px;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+

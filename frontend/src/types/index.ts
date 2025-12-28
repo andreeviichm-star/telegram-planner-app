@@ -32,3 +32,33 @@ export interface CalendarEvent {
   updatedAt: string
 }
 
+export type MeetingPlatform = 'zoom' | 'telegram' | 'whatsapp' | 'other'
+
+export interface Meeting {
+  id: string
+  title: string
+  description?: string
+  date: string
+  duration: number // в минутах
+  platform: MeetingPlatform
+  link?: string
+  participants?: string[]
+  reminder24h?: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export type TransactionType = 'income' | 'expense' | 'fundraising'
+
+export interface BudgetTransaction {
+  id: string
+  type: TransactionType
+  title: string
+  description?: string
+  amount: number
+  category?: string
+  date: string
+  createdAt: string
+  updatedAt: string
+}
+

@@ -7,6 +7,8 @@ import { initDB } from './db.js'
 import tasksRoutes from './routes/tasks.js'
 import calendarRoutes from './routes/calendar.js'
 import notificationsRoutes from './routes/notifications.js'
+import meetingsRoutes from './routes/meetings.js'
+import budgetRoutes from './routes/budget.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -25,6 +27,8 @@ await initDB()
 app.use('/api/tasks', tasksRoutes)
 app.use('/api/calendar', calendarRoutes)
 app.use('/api/notifications', notificationsRoutes)
+app.use('/api/meetings', meetingsRoutes)
+app.use('/api/budget', budgetRoutes)
 
 // Health check
 app.get('/health', (req, res) => {

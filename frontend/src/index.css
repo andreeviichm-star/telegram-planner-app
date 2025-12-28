@@ -11,14 +11,28 @@
   --accent-blue: #4a90e2;
   --accent-blue-light: #6ba3f0;
   --accent-blue-dark: #357abd;
+  --accent-purple: #8b5cf6;
+  --accent-purple-light: #a78bfa;
+  --accent-purple-dark: #7c3aed;
   --text-primary: #ffffff;
   --text-secondary: #b8c5d6;
   --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   --gradient-blue: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+  --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
   --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   --border-glass: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Global button styles */
+.btn-primary {
+  background: var(--gradient-purple) !important;
+  color: var(--text-primary) !important;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
 }
 
 body {

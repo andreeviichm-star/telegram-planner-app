@@ -37,16 +37,16 @@ router.get('/', async (req, res) => {
 // Create notification
 router.post('/', async (req, res) => {
   try {
-    const { userId, type, title, message, taskId, eventId, scheduledAt } = req.body
+    const { userId, type, title, message, taskId, eventId, meetingId, scheduledAt } = req.body
     
     const id = randomUUID()
     const now = new Date().toISOString()
     
     const db = getDBAsync()
     await db.run(
-      `INSERT INTO notifications (id, user_id, type, title, message, task_id, event_id, scheduled_at, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [id, userId, type, title, message || null, taskId || null, eventId || null, scheduledAt, now]
+      `INSERT INTO notifications (id, user_id, type, title, message, task_id, event_id, meeting_id, scheduled_at, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, userId, type, title, message || null, taskId || null, eventId || null, meetingId || null, scheduledAt, now]
     )
     
     const notification = await db.get('SELECT * FROM notifications WHERE id = ?', [id])

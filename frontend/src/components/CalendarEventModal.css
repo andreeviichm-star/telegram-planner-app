@@ -1,7 +1,7 @@
 .event-date {
   font-size: 16px;
   font-weight: 600;
-  color: var(--accent-blue);
+  color: var(--accent-purple);
   margin-bottom: 20px;
   text-transform: capitalize;
 }
@@ -32,9 +32,9 @@
 }
 
 .event-type-btn.active {
-  border-color: var(--accent-blue);
-  background: rgba(74, 144, 226, 0.2);
-  color: var(--accent-blue);
+  border-color: var(--accent-purple);
+  background: rgba(139, 92, 246, 0.2);
+  color: var(--accent-purple);
 }
 
 .event-type-btn:active {

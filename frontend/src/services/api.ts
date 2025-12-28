@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Task, CalendarEvent } from '../types'
+import { Task, CalendarEvent, Meeting, BudgetTransaction } from '../types'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
 
@@ -56,5 +56,45 @@ export const updateCalendarEvent = async (id: string, event: Partial<CalendarEve
 
 export const deleteCalendarEvent = async (id: string) => {
   await api.delete(`/calendar/events/${id}`)
+}
+
+// Meetings API
+export const getMeetings = async () => {
+  const response = await api.get<Meeting[]>('/meetings')
+  return response.data
+}
+
+export const createMeeting = async (meeting: Meeting) => {
+  const response = await api.post<Meeting>('/meetings', meeting)
+  return response.data
+}
+
+export const updateMeeting = async (id: string, meeting: Partial<Meeting>) => {
+  const response = await api.put<Meeting>(`/meetings/${id}`, meeting)
+  return response.data
+}
+
+export const deleteMeeting = async (id: string) => {
+  await api.delete(`/meetings/${id}`)
+}
+
+// Budget API
+export const getTransactions = async () => {
+  const response = await api.get<BudgetTransaction[]>('/budget/transactions')
+  return response.data
+}
+
+export const createTransaction = async (transaction: BudgetTransaction) => {
+  const response = await api.post<BudgetTransaction>('/budget/transactions', transaction)
+  return response.data
+}
+
+export const updateTransaction = async (id: string, transaction: Partial<BudgetTransaction>) => {
+  const response = await api.put<BudgetTransaction>(`/budget/transactions/${id}`, transaction)
+  return response.data
+}
+
+export const deleteTransaction = async (id: string) => {
+  await api.delete(`/budget/transactions/${id}`)
 }
 

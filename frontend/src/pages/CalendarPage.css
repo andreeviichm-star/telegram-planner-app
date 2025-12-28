@@ -7,6 +7,29 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  gap: 8px;
+}
+
+.menu-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.menu-btn:active {
+  transform: scale(0.9);
+}
+
+.calendar-title {
+  flex: 1;
+  text-align: center;
 }
 
 .calendar-title {
@@ -86,5 +109,28 @@
 
 .legend-dot.sex {
   background: #8b5cf6;
+}
+
+.fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-purple);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  z-index: 999;
+  transition: transform 0.2s;
+}
+
+.fab:active {
+  transform: scale(0.9);
 }
 

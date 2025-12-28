@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
+import { ChevronLeft, ChevronRight, Plus, Menu } from 'lucide-react'
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from 'date-fns'
 import { ru } from 'date-fns/locale'
 import CalendarDay from '../components/CalendarDay'
 import CalendarEventModal from '../components/CalendarEventModal'
+import MenuModal from '../components/MenuModal'
 import { CalendarEvent } from '../types'
 import { getCalendarEvents, createCalendarEvent, updateCalendarEvent, deleteCalendarEvent } from '../services/api'
 import './CalendarPage.css'
 
 export default function CalendarPage() {
+  const location = useLocation()
   const [currentDate, setCurrentDate] = useState(new Date())
   const [events, setEvents] = useState<CalendarEvent[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
 
@@ -91,6 +95,9 @@ export default function CalendarPage() {
   return (
     <div className="calendar-page">
       <div className="calendar-header">
+        <button className="menu-btn glass-light" onClick={() => setIsMenuModalOpen(true)}>
+          <Menu size={24} />
+        </button>
         <button className="nav-btn glass-light" onClick={handlePrevMonth}>
           <ChevronLeft size={20} />
         </button>
@@ -158,6 +165,14 @@ export default function CalendarPage() {
           }}
           onSave={handleSaveEvent}
           onDelete={selectedEvent ? () => handleDeleteEvent(selectedEvent.id) : undefined}
+        />
+      )}
+
+      {isMenuModalOpen && (
+        <MenuModal
+          isOpen={isMenuModalOpen}
+          onClose={() => setIsMenuModalOpen(false)}
+          currentPath={location.pathname}
         />
       )}
     </div>

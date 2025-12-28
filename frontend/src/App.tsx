@@ -3,6 +3,8 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import TasksPage from './pages/TasksPage'
 import CalendarPage from './pages/CalendarPage'
+import MeetingsPage from './pages/MeetingsPage'
+import BudgetPage from './pages/BudgetPage'
 import './App.css'
 
 // Используем глобальный объект Telegram WebApp
@@ -41,6 +43,8 @@ function App() {
         <Routes>
           <Route path="/" element={<TasksPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/meetings" element={<MeetingsPage />} />
+          <Route path="/budget" element={<BudgetPage />} />
         </Routes>
       </Layout>
     </Router>

@@ -57,9 +57,44 @@ export async function initDB() {
       message TEXT,
       task_id TEXT,
       event_id TEXT,
+      meeting_id TEXT,
       scheduled_at TEXT NOT NULL,
       sent_at TEXT,
       created_at TEXT NOT NULL
+    )
+  `)
+
+  // Meetings table
+  await run(`
+    CREATE TABLE IF NOT EXISTS meetings (
+      id TEXT PRIMARY KEY,
+      title TEXT NOT NULL,
+      description TEXT,
+      date TEXT NOT NULL,
+      duration INTEGER NOT NULL,
+      platform TEXT NOT NULL,
+      link TEXT,
+      participants TEXT,
+      reminder_24h INTEGER DEFAULT 1,
+      user_id TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    )
+  `)
+
+  // Budget transactions table
+  await run(`
+    CREATE TABLE IF NOT EXISTS budget_transactions (
+      id TEXT PRIMARY KEY,
+      type TEXT NOT NULL,
+      title TEXT NOT NULL,
+      description TEXT,
+      amount REAL NOT NULL,
+      category TEXT,
+      date TEXT NOT NULL,
+      user_id TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
     )
   `)
 

@@ -139,7 +139,7 @@ textarea.form-input {
 }
 
 .btn-primary {
-  background: var(--gradient-blue);
+  background: var(--gradient-purple);
   color: var(--text-primary);
 }
 
