@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Plus, Filter, Menu } from 'lucide-react'
-import TaskCard from '../components/TaskCard'
+// import TaskCard from '../components/TaskCard'
 // import TaskModal from '../components/TaskModal'
 // import BudgetWidget from '../components/BudgetWidget'
 import { Task, Priority } from '../types'
@@ -111,12 +111,13 @@ export default function TasksPageProgressive() {
           </div>
         )}
         {tasks.map(task => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onEdit={(task) => console.log('Edit task:', task)}
-            onDelete={(id) => console.log('Delete task:', id)}
-          />
+          <div key={task.id} className="glass" style={{ padding: '16px', marginBottom: '12px' }}>
+            <h3 style={{ color: '#FFFFFF', marginBottom: '8px' }}>{task.title}</h3>
+            <p style={{ color: '#B8C5D6', fontSize: '14px' }}>{task.description || 'Нет описания'}</p>
+            <div style={{ marginTop: '8px', fontSize: '12px', color: '#B8C5D6' }}>
+              Приоритет: {task.priority} | Статус: {task.status}
+            </div>
+          </div>
         ))}
       </div>
 
