@@ -19,10 +19,6 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
 
-  useEffect(() => {
-    loadEvents()
-  }, [loadEvents])
-
   const loadEvents = useCallback(async () => {
     try {
       const start = startOfMonth(currentDate)
@@ -36,6 +32,10 @@ export default function CalendarPage() {
       setEvents([])
     }
   }, [currentDate])
+
+  useEffect(() => {
+    loadEvents()
+  }, [loadEvents])
 
   const monthStart = startOfMonth(currentDate)
   const monthEnd = endOfMonth(currentDate)

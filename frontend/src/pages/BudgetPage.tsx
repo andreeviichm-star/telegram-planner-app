@@ -16,10 +16,6 @@ export default function BudgetPage() {
   const [selectedTransaction, setSelectedTransaction] = useState<BudgetTransaction | null>(null)
   const [transactionType, setTransactionType] = useState<TransactionType>('income')
 
-  useEffect(() => {
-    loadTransactions()
-  }, [loadTransactions])
-
   const loadTransactions = useCallback(async () => {
     try {
       const data = await getTransactions()
@@ -31,6 +27,10 @@ export default function BudgetPage() {
       setTransactions([])
     }
   }, [])
+
+  useEffect(() => {
+    loadTransactions()
+  }, [loadTransactions])
 
   const handleCreateTransaction = (type: TransactionType) => {
     setTransactionType(type)

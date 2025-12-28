@@ -10,10 +10,6 @@ export default function BudgetWidget() {
   const [transactions, setTransactions] = useState<BudgetTransaction[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    loadTransactions()
-  }, [loadTransactions])
-
   const loadTransactions = useCallback(async () => {
     try {
       const data = await getTransactions()
@@ -27,6 +23,10 @@ export default function BudgetWidget() {
       setLoading(false)
     }
   }, [])
+
+  useEffect(() => {
+    loadTransactions()
+  }, [loadTransactions])
 
   if (loading) {
     return (

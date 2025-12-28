@@ -15,12 +15,6 @@ export default function MeetingsPage() {
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null)
 
-  useEffect(() => {
-    loadMeetings()
-  }, [loadMeetings])
-
-  // Removed notification check to avoid dynamic import issues
-
   const loadMeetings = useCallback(async () => {
     try {
       const data = await getMeetings()
@@ -32,6 +26,10 @@ export default function MeetingsPage() {
       setMeetings([])
     }
   }, [])
+
+  useEffect(() => {
+    loadMeetings()
+  }, [loadMeetings])
 
   const handleCreateMeeting = () => {
     setSelectedMeeting(null)

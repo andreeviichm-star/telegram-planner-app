@@ -19,12 +19,6 @@ export default function TasksPage() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [filter, setFilter] = useState<{ priority?: Priority; status?: string }>({})
 
-  useEffect(() => {
-    loadTasks()
-  }, [loadTasks])
-
-  // Removed notification check to avoid dynamic import issues
-
   const loadTasks = useCallback(async () => {
     try {
       const data = await getTasks(filter)
@@ -36,6 +30,10 @@ export default function TasksPage() {
       setTasks([])
     }
   }, [filter])
+
+  useEffect(() => {
+    loadTasks()
+  }, [loadTasks])
 
   const handleCreateTask = () => {
     setSelectedTask(null)
