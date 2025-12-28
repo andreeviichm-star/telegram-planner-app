@@ -13,8 +13,6 @@ const normalizeApiUrl = (url: string): string => {
 
 const API_URL = normalizeApiUrl(import.meta.env.VITE_API_URL || 'http://localhost:3001/api')
 
-logger.info('API URL:', API_URL)
-
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -27,7 +25,10 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    logger.error('API Error:', error.message)
+    // Use console.error directly to avoid circular dependency issues
+    if (import.meta.env.DEV) {
+      console.error('API Error:', error.message)
+    }
     return Promise.reject(error)
   }
 )

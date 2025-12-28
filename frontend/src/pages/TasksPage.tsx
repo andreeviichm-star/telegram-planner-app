@@ -96,11 +96,6 @@ export default function TasksPage() {
     }
   }, [tasks, filter])
 
-  // Debug: log render
-  if (import.meta.env.DEV) {
-    logger.info('TasksPage render call', { tasksCount: tasks.length })
-  }
-
   return (
     <div className="tasks-page">
       <div className="page-header">

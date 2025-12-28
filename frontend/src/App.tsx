@@ -44,11 +44,6 @@ function App() {
     }
   }, [])
 
-  // Debug: check if routes are working
-  if (import.meta.env.DEV) {
-    logger.info('App render - HashRouter setup')
-  }
-
   return (
     <HashRouter>
       <Layout>

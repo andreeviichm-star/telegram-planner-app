@@ -29,16 +29,9 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [children])
 
-  // Debug: log children
-  if (import.meta.env.DEV) {
-    console.log('Layout render - children:', children)
-  }
-
   return (
     <div className="layout">
-      <main className="main-content">
-        {children || <div style={{ padding: '20px', color: 'white' }}>No children rendered!</div>}
-      </main>
+      <main className="main-content">{children}</main>
     </div>
   )
 }
