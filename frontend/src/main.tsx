@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
-import { debugTelegram } from './utils/telegramDebug'
 
 const rootElement = document.getElementById('root')
 
@@ -23,15 +22,8 @@ if (!rootElement) {
     </div>
   `
 } else {
-  // Render immediately
   try {
-    // Remove StrictMode to avoid double rendering issues
     ReactDOM.createRoot(rootElement).render(<App />)
-    
-    // Debug after a short delay to allow React to render
-    setTimeout(() => {
-      debugTelegram()
-    }, 100)
   } catch (error) {
     console.error('Failed to render React app:', error)
     rootElement.innerHTML = `
