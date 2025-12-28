@@ -59,34 +59,79 @@ export default function TasksPageSimple() {
     <div 
       className="tasks-page" 
       style={{ 
-        padding: '20px', 
-        color: 'white',
-        background: '#0a0e27',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        padding: '40px', 
+        color: '#FFFFFF',
+        background: '#FF0000', // RED background to see if it renders
         minHeight: '100vh',
-        width: '100%',
+        width: '100vw',
+        height: '100vh',
         display: 'block',
         visibility: 'visible',
         opacity: 1,
+        zIndex: 999999,
+        overflow: 'auto',
+        boxSizing: 'border-box',
       }}
     >
-      <h1 style={{ color: 'white', fontSize: '28px', marginBottom: '20px' }}>FLUXPLANNER</h1>
-      <p style={{ color: 'white', fontSize: '16px' }}>Simple version - if you see this, basic rendering works!</p>
+      <h1 style={{ 
+        color: '#FFFFFF', 
+        fontSize: '48px', 
+        marginBottom: '40px',
+        fontWeight: 'bold',
+        textShadow: '2px 2px 4px #000000',
+      }}>
+        FLUXPLANNER
+      </h1>
+      <p style={{ 
+        color: '#FFFFFF', 
+        fontSize: '24px',
+        fontWeight: 'bold',
+        textShadow: '2px 2px 4px #000000',
+      }}>
+        Simple version - if you see this, basic rendering works!
+      </p>
       <div style={{
         position: 'fixed',
-        top: '10px',
-        left: '10px',
-        background: 'red',
-        color: 'white',
-        padding: '10px',
-        zIndex: 99999,
-        fontSize: '14px',
+        top: '20px',
+        left: '20px',
+        background: '#00FF00', // GREEN background
+        color: '#000000',
+        padding: '20px',
+        zIndex: 9999999,
+        fontSize: '20px',
         fontWeight: 'bold',
-        border: '2px solid yellow',
+        border: '5px solid #0000FF',
         display: 'block',
         visibility: 'visible',
         opacity: 1,
+        borderRadius: '10px',
+        boxShadow: '0 0 20px #000000',
       }}>
         ✅ TEST: Simple version rendered
+      </div>
+      <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        background: '#0000FF', // BLUE background
+        color: '#FFFFFF',
+        padding: '20px',
+        zIndex: 9999999,
+        fontSize: '20px',
+        fontWeight: 'bold',
+        border: '5px solid #FF0000',
+        display: 'block',
+        visibility: 'visible',
+        opacity: 1,
+        borderRadius: '10px',
+        boxShadow: '0 0 20px #000000',
+      }}>
+        BOTTOM RIGHT TEST
       </div>
     </div>
   )

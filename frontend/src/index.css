@@ -57,11 +57,14 @@ html, body {
 #root {
   min-height: 100vh !important;
   width: 100% !important;
+  height: 100vh !important;
   background: var(--bg-primary) !important;
   display: block !important;
   position: relative !important;
   visibility: visible !important;
   opacity: 1 !important;
+  overflow: visible !important;
+  z-index: 1 !important;
 }
 
 /* Liquid Glass Effect */

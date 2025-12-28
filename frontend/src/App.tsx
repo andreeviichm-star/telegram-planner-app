@@ -83,14 +83,9 @@ function App() {
   console.log('🧪 USE_SIMPLE_VERSION:', USE_SIMPLE_VERSION)
   
   if (USE_SIMPLE_VERSION) {
-    console.log('🧪 Using SIMPLE version for testing')
-    const simpleElement = <TasksPageSimple />
-    console.log('🧪 Simple element created:', simpleElement)
-    return (
-      <Layout>
-        {simpleElement}
-      </Layout>
-    )
+    console.log('🧪 Using SIMPLE version for testing - WITHOUT Layout')
+    // Test: Render directly without Layout to see if Layout is the problem
+    return <TasksPageSimple />
   }
   
   console.log('🧪 Using FULL version')
