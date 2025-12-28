@@ -26,17 +26,33 @@ function App() {
     // Используем Telegram WebApp API напрямую
     const initTelegram = () => {
       try {
-        // Ждем загрузки Telegram WebApp скрипта
-        if (window.Telegram?.WebApp) {
+        // Проверяем наличие Telegram WebApp
+        if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
           const tg = window.Telegram.WebApp
           tg.ready()
           tg.expand()
           tg.setHeaderColor('#0a0e27')
           tg.setBackgroundColor('#0a0e27')
-          console.log('Telegram WebApp initialized')
+          console.log('Telegram WebApp initialized successfully')
         } else {
-          // Если скрипт еще не загружен, ждем
-          setTimeout(initTelegram, 100)
+          // Если скрипт еще не загружен, ждем (максимум 3 секунды)
+          let attempts = 0
+          const maxAttempts = 30
+          const checkInterval = setInterval(() => {
+            attempts++
+            if (window.Telegram?.WebApp) {
+              clearInterval(checkInterval)
+              const tg = window.Telegram.WebApp
+              tg.ready()
+              tg.expand()
+              tg.setHeaderColor('#0a0e27')
+              tg.setBackgroundColor('#0a0e27')
+              console.log('Telegram WebApp initialized after delay')
+            } else if (attempts >= maxAttempts) {
+              clearInterval(checkInterval)
+              console.warn('Telegram WebApp not available - running in browser mode')
+            }
+          }, 100)
         }
       } catch (error) {
         console.error('Telegram WebApp error:', error)
@@ -44,7 +60,12 @@ function App() {
       }
     }
     
-    initTelegram()
+    // Запускаем инициализацию после загрузки DOM
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTelegram)
+    } else {
+      initTelegram()
+    }
   }, [])
 
   return (
