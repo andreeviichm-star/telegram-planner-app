@@ -12,12 +12,11 @@ export default function BudgetWidget() {
 
   const loadTransactions = useCallback(async () => {
     try {
+      setLoading(true)
       const data = await getTransactions()
       setTransactions(data || [])
     } catch (error) {
-      if (import.meta.env.DEV) {
-        console.error('Failed to load transactions:', error)
-      }
+      console.error('Failed to load transactions:', error)
       setTransactions([])
     } finally {
       setLoading(false)
@@ -27,6 +26,16 @@ export default function BudgetWidget() {
   useEffect(() => {
     loadTransactions()
   }, [loadTransactions])
+  
+  const handleClick = () => {
+    try {
+      navigate('/budget')
+    } catch (error) {
+      console.error('Navigation error:', error)
+      // Fallback to window.location if navigate fails
+      window.location.hash = '#/budget'
+    }
+  }
 
   if (loading) {
     return (
@@ -51,7 +60,7 @@ export default function BudgetWidget() {
   const balance = income - expenses
 
   return (
-    <div className="budget-widget glass" onClick={() => navigate('/budget')}>
+    <div className="budget-widget glass" onClick={handleClick}>
       <div className="budget-widget-header">
         <Wallet size={20} />
         <span>Бюджет</span>

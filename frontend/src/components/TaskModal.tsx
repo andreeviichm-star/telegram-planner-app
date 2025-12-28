@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEvent, ChangeEvent } from 'react'
 import { Clock, Users, FileText, Calendar } from 'lucide-react'
 import { Task, Priority } from '../types'
 import './TaskModal.css'
@@ -38,7 +38,7 @@ export default function TaskModal({ task, onSave, onClose }: TaskModalProps) {
     }
   }, [task])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     onSave({
       title,
@@ -52,7 +52,7 @@ export default function TaskModal({ task, onSave, onClose }: TaskModalProps) {
     })
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setDocuments(Array.from(e.target.files))
     }
