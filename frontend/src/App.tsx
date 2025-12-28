@@ -73,14 +73,22 @@ function App() {
     console.log('🔗 Pathname:', window.location.pathname)
   }, [])
 
+  // TEST: Render TasksPage directly without router to check if router is the issue
+  // If this works, the problem is with HashRouter in Telegram
+  console.log('🧪 Testing: Rendering TasksPage directly without router')
+  return (
+    <Layout>
+      <TasksPage />
+    </Layout>
+  )
+
+  // Original code with router (commented out for testing)
+  /*
   return (
     <HashRouter>
       <Layout>
         <Routes>
-          <Route 
-            path="/" 
-            element={<TasksPage />} 
-          />
+          <Route path="/" element={<TasksPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/meetings" element={<MeetingsPage />} />
           <Route path="/budget" element={<BudgetPage />} />
@@ -88,6 +96,7 @@ function App() {
       </Layout>
     </HashRouter>
   )
+  */
 }
 
 export default App

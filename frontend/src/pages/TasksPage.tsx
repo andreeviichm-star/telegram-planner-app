@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
 import { Plus, Filter, Menu } from 'lucide-react'
 import TaskCard from '../components/TaskCard'
 import TaskModal from '../components/TaskModal'
@@ -12,9 +11,6 @@ import './TasksPage.css'
 
 export default function TasksPage() {
   console.log('📋 TasksPage function called - component is rendering!')
-  
-  const location = useLocation()
-  console.log('📋 TasksPage location:', location.pathname, location.hash)
   
   const [tasks, setTasks] = useState<Task[]>([])
   
@@ -214,7 +210,7 @@ export default function TasksPage() {
         <MenuModal
           isOpen={isMenuModalOpen}
           onClose={() => setIsMenuModalOpen(false)}
-          currentPath={location.pathname}
+          currentPath="/"
         />
       )}
     </div>
