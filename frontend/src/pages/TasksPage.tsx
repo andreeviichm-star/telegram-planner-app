@@ -4,7 +4,6 @@ import TaskCard from '../components/TaskCard'
 import TaskModal from '../components/TaskModal'
 import FilterModal from '../components/FilterModal'
 import MenuModal from '../components/MenuModal'
-import BudgetWidget from '../components/BudgetWidget'
 import { Task, Priority } from '../types'
 import { getTasks, createTask, updateTask, deleteTask } from '../services/api'
 import './TasksPage.css'
@@ -74,13 +73,6 @@ export default function TasksPage() {
     }
   }
 
-  const stats = {
-    total: tasks.length,
-    completed: tasks.filter(t => t.status === 'completed').length,
-    inProgress: tasks.filter(t => t.status === 'in_progress').length,
-    totalTime: tasks.reduce((sum, t) => sum + (t.estimatedTime || 0), 0)
-  }
-
   console.log('📋 TasksPage: Returning JSX now')
   
   return (
@@ -105,8 +97,6 @@ export default function TasksPage() {
           <Filter size={20} />
         </button>
       </div>
-
-      <BudgetWidget />
 
       <div className="tasks-list">
         {tasks.map(task => (
