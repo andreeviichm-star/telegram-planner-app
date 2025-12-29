@@ -1,4 +1,4 @@
-import { CheckSquare, Calendar, Video, Wallet, X } from 'lucide-react'
+import { Home, CheckSquare, Calendar, Video, Wallet, X } from 'lucide-react'
 import './MenuModal.css'
 
 interface MenuModalProps {
