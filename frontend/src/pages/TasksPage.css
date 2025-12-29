@@ -20,6 +20,21 @@
   visibility: visible !important;
 }
 
+.page-title {
+  flex: 1;
+  text-align: left !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #4a90e2 0%, #8b5cf6 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  visibility: visible !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .menu-btn {
   padding: 10px;
   border: none;

@@ -97,32 +97,13 @@ export default function TasksPage() {
     >
       
       <div className="page-header">
-        <h1 className="page-title">FLUXPLANNER</h1>
+        <h1 className="page-title">Задачи</h1>
         <button
           className="filter-btn glass-light"
           onClick={() => setIsFilterModalOpen(true)}
         >
           <Filter size={20} />
         </button>
-      </div>
-
-      <div className="stats-grid">
-        <div className="stat-card glass">
-          <div className="stat-value">{stats.total}</div>
-          <div className="stat-label">Всего задач</div>
-        </div>
-        <div className="stat-card glass">
-          <div className="stat-value">{stats.completed}</div>
-          <div className="stat-label">Выполнено</div>
-        </div>
-        <div className="stat-card glass">
-          <div className="stat-value">{stats.inProgress}</div>
-          <div className="stat-label">В работе</div>
-        </div>
-        <div className="stat-card glass">
-          <div className="stat-value">{stats.totalTime}h</div>
-          <div className="stat-label">Время</div>
-        </div>
       </div>
 
       <BudgetWidget />
