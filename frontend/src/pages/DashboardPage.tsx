@@ -51,7 +51,6 @@ export default function DashboardPage({ onNavigate }: DashboardPageProps = {}) {
     <div className="dashboard-page">
       <div className="page-header">
         <h1 className="page-title">FLUXPLANNER</h1>
-        <div style={{ width: '40px' }}></div>
       </div>
 
       <div className="dashboard-content">
