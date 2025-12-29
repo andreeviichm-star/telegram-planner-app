@@ -83,22 +83,29 @@ html, body {
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* Scrollbar */
+/* Scrollbar - Hidden but scrollable */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 0px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-blue);
-  border-radius: 3px;
+  background: transparent;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-blue-light);
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+*::-webkit-scrollbar {
+  display: none;
 }
 
 /* Animations */
