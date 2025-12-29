@@ -8,7 +8,7 @@ import { getTransactions, createTransaction, updateTransaction, deleteTransactio
 import './BudgetPage.css'
 
 interface BudgetPageProps {
-  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+  onNavigate?: (page: 'dashboard' | 'tasks' | 'calendar' | 'meetings' | 'budget') => void
 }
 
 export default function BudgetPage({ onNavigate }: BudgetPageProps = {}) {

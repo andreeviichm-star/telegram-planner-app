@@ -5,13 +5,13 @@ interface MenuModalProps {
   isOpen: boolean
   onClose: () => void
   currentPath: string
-  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+  onNavigate?: (page: 'dashboard' | 'tasks' | 'calendar' | 'meetings' | 'budget') => void
 }
 
 export default function MenuModal({ isOpen, onClose, currentPath, onNavigate }: MenuModalProps) {
   if (!isOpen) return null
 
-  const handleNavigate = (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => {
+  const handleNavigate = (page: 'dashboard' | 'tasks' | 'calendar' | 'meetings' | 'budget') => {
     if (onNavigate) {
       onNavigate(page)
     }
@@ -30,7 +30,18 @@ export default function MenuModal({ isOpen, onClose, currentPath, onNavigate }: 
 
         <div className="menu-options">
           <button
-            className={`menu-option ${currentPath === '/' || currentPath === 'tasks' ? 'active' : ''}`}
+            className={`menu-option ${currentPath === 'dashboard' || currentPath === '/' ? 'active' : ''}`}
+            onClick={() => handleNavigate('dashboard')}
+          >
+            <Home size={24} />
+            <div className="menu-option-content">
+              <div className="menu-option-title">Главная</div>
+              <div className="menu-option-subtitle">Сводка на сегодня</div>
+            </div>
+          </button>
+
+          <button
+            className={`menu-option ${currentPath === 'tasks' ? 'active' : ''}`}
             onClick={() => handleNavigate('tasks')}
           >
             <CheckSquare size={24} />

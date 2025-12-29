@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import TasksPage from './pages/TasksPage'
 import TasksPageSimple from './pages/TasksPageSimple'
 import TasksPageProgressive from './pages/TasksPageProgressive'
+import DashboardPage from './pages/DashboardPage'
 import CalendarPage from './pages/CalendarPage'
 import MeetingsPage from './pages/MeetingsPage'
 import BudgetPage from './pages/BudgetPage'
@@ -49,7 +50,7 @@ if (typeof window !== 'undefined') {
 }
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'tasks' | 'calendar' | 'meetings' | 'budget'>('tasks')
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'tasks' | 'calendar' | 'meetings' | 'budget'>('dashboard')
   
   useEffect(() => {
     console.log('⚛️ App component mounted')
@@ -102,6 +103,8 @@ function App() {
   
   const renderCurrentPage = () => {
     switch (currentPage) {
+      case 'dashboard':
+        return <DashboardPage onNavigate={setCurrentPage} />
       case 'calendar':
         return <CalendarPage onNavigate={setCurrentPage} />
       case 'meetings':
@@ -109,8 +112,9 @@ function App() {
       case 'budget':
         return <BudgetPage onNavigate={setCurrentPage} />
       case 'tasks':
-      default:
         return renderPage()
+      default:
+        return <DashboardPage onNavigate={setCurrentPage} />
     }
   }
   

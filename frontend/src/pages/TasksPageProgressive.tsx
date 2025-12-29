@@ -4,13 +4,12 @@ import TaskCard from '../components/TaskCard'
 import TaskModal from '../components/TaskModal'
 import FilterModal from '../components/FilterModal'
 import MenuModal from '../components/MenuModal'
-import BudgetWidget from '../components/BudgetWidget'
 import { Task, Priority } from '../types'
 import { getTasks, createTask, updateTask, deleteTask } from '../services/api'
 import './TasksPage.css'
 
 interface TasksPageProgressiveProps {
-  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+  onNavigate?: (page: 'dashboard' | 'tasks' | 'calendar' | 'meetings' | 'budget') => void
 }
 
 export default function TasksPageProgressive({ onNavigate }: TasksPageProgressiveProps = {}) {
@@ -147,8 +146,6 @@ export default function TasksPageProgressive({ onNavigate }: TasksPageProgressiv
           <div className="stat-label">Время</div>
         </div>
       </div>
-
-      <BudgetWidget />
 
       <div className="tasks-list">
         {tasks.length === 0 && (

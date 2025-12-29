@@ -8,7 +8,7 @@ import { getMeetings, createMeeting, updateMeeting, deleteMeeting } from '../ser
 import './MeetingsPage.css'
 
 interface MeetingsPageProps {
-  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+  onNavigate?: (page: 'dashboard' | 'tasks' | 'calendar' | 'meetings' | 'budget') => void
 }
 
 export default function MeetingsPage({ onNavigate }: MeetingsPageProps = {}) {

@@ -10,7 +10,7 @@ import { getCalendarEvents, createCalendarEvent, updateCalendarEvent, deleteCale
 import './CalendarPage.css'
 
 interface CalendarPageProps {
-  onNavigate?: (page: 'tasks' | 'calendar' | 'meetings' | 'budget') => void
+  onNavigate?: (page: 'dashboard' | 'tasks' | 'calendar' | 'meetings' | 'budget') => void
 }
 
 export default function CalendarPage({ onNavigate }: CalendarPageProps = {}) {
