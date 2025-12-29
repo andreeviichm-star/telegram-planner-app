@@ -97,12 +97,6 @@ export default function TasksPage() {
     >
       
       <div className="page-header">
-        <button
-          className="menu-btn glass-light"
-          onClick={() => setIsMenuModalOpen(true)}
-        >
-          <Menu size={24} />
-        </button>
         <h1 className="page-title">FLUXPLANNER</h1>
         <button
           className="filter-btn glass-light"
@@ -152,6 +146,14 @@ export default function TasksPage() {
 
       <button className="fab glass" onClick={handleCreateTask}>
         <Plus size={24} />
+      </button>
+
+      <button 
+        className="menu-btn-fab glass" 
+        onClick={() => setIsMenuModalOpen(true)}
+      >
+        <Menu size={20} />
+        <span>Меню</span>
       </button>
 
       {isTaskModalOpen && (

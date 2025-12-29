@@ -95,12 +95,6 @@ export default function BudgetPage({ onNavigate }: BudgetPageProps = {}) {
   return (
     <div className="budget-page">
       <div className="page-header">
-        <button
-          className="menu-btn glass-light"
-          onClick={() => setIsMenuModalOpen(true)}
-        >
-          <Menu size={24} />
-        </button>
         <h1 className="page-title">Бюджет</h1>
         <div style={{ width: '40px' }}></div>
       </div>
@@ -204,6 +198,14 @@ export default function BudgetPage({ onNavigate }: BudgetPageProps = {}) {
           onSave={handleSaveTransaction}
         />
       )}
+
+      <button 
+        className="menu-btn-fab glass" 
+        onClick={() => setIsMenuModalOpen(true)}
+      >
+        <Menu size={20} />
+        <span>Меню</span>
+      </button>
 
       {isMenuModalOpen && (
         <MenuModal

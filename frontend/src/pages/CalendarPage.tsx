@@ -104,9 +104,6 @@ export default function CalendarPage({ onNavigate }: CalendarPageProps = {}) {
   return (
     <div className="calendar-page">
       <div className="calendar-header">
-        <button className="menu-btn glass-light" onClick={() => setIsMenuModalOpen(true)}>
-          <Menu size={24} />
-        </button>
         <button className="nav-btn glass-light" onClick={handlePrevMonth}>
           <ChevronLeft size={20} />
         </button>
@@ -176,6 +173,14 @@ export default function CalendarPage({ onNavigate }: CalendarPageProps = {}) {
           onDelete={selectedEvent ? () => handleDeleteEvent(selectedEvent.id) : undefined}
         />
       )}
+
+      <button 
+        className="menu-btn-fab glass" 
+        onClick={() => setIsMenuModalOpen(true)}
+      >
+        <Menu size={20} />
+        <span>Меню</span>
+      </button>
 
       {isMenuModalOpen && (
         <MenuModal

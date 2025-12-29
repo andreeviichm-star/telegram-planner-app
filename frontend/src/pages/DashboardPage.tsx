@@ -50,20 +50,6 @@ export default function DashboardPage({ onNavigate }: DashboardPageProps = {}) {
   return (
     <div className="dashboard-page">
       <div className="page-header">
-        <button
-          className="menu-btn glass-light"
-          onClick={() => setIsMenuModalOpen(true)}
-          style={{
-            padding: '10px',
-            border: 'none',
-            borderRadius: '12px',
-            color: '#FFFFFF',
-            cursor: 'pointer',
-            background: 'rgba(22, 33, 62, 0.4)',
-          }}
-        >
-          <Menu size={24} />
-        </button>
         <h1 className="page-title">FLUXPLANNER</h1>
         <div style={{ width: '40px' }}></div>
       </div>
@@ -131,6 +117,14 @@ export default function DashboardPage({ onNavigate }: DashboardPageProps = {}) {
           )}
         </div>
       </div>
+
+      <button 
+        className="menu-btn-fab glass" 
+        onClick={() => setIsMenuModalOpen(true)}
+      >
+        <Menu size={20} />
+        <span>Меню</span>
+      </button>
 
       {isMenuModalOpen && (
         <MenuModal

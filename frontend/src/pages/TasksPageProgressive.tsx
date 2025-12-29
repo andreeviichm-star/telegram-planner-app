@@ -97,20 +97,6 @@ export default function TasksPageProgressive({ onNavigate }: TasksPageProgressiv
       }}
     >
       <div className="page-header">
-        <button
-          className="menu-btn glass-light"
-          onClick={() => setIsMenuModalOpen(true)}
-          style={{
-            padding: '10px',
-            border: 'none',
-            borderRadius: '12px',
-            color: '#FFFFFF',
-            cursor: 'pointer',
-            background: 'rgba(22, 33, 62, 0.4)',
-          }}
-        >
-          <Menu size={24} />
-        </button>
         <h1 className="page-title">FLUXPLANNER</h1>
         <button
           className="filter-btn glass-light"
@@ -186,6 +172,14 @@ export default function TasksPageProgressive({ onNavigate }: TasksPageProgressiv
         }}
       >
         <Plus size={24} />
+      </button>
+
+      <button 
+        className="menu-btn-fab glass" 
+        onClick={() => setIsMenuModalOpen(true)}
+      >
+        <Menu size={20} />
+        <span>Меню</span>
       </button>
 
       {isTaskModalOpen && (
