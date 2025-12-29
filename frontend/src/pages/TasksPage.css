@@ -38,26 +38,29 @@
 }
 
 .menu-btn-fab {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  color: var(--text-primary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--gradient-purple);
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-  z-index: 999;
-  transition: transform 0.2s;
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--gradient-purple) !important;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4) !important;
+  z-index: 999 !important;
+  transition: transform 0.2s !important;
+  padding: 0 !important;
+  min-width: 56px !important;
+  max-width: 56px !important;
 }
 
 .menu-btn-fab:active {
-  transform: scale(0.9);
+  transform: scale(0.9) !important;
 }
 
 .page-title {
