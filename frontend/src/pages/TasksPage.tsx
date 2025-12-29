@@ -152,8 +152,7 @@ export default function TasksPage() {
         className="menu-btn-fab glass" 
         onClick={() => setIsMenuModalOpen(true)}
       >
-        <Menu size={20} />
-        <span>Меню</span>
+        <Menu size={24} />
       </button>
 
       {isTaskModalOpen && (

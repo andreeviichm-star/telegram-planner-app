@@ -41,21 +41,19 @@
   position: fixed;
   bottom: 20px;
   left: 20px;
-  padding: 12px 20px;
-  border-radius: 50px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   border: none;
   color: var(--text-primary);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   background: var(--gradient-purple);
   box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
   z-index: 999;
   transition: transform 0.2s;
-  font-size: 16px;
-  font-weight: 600;
 }
 
 .menu-btn-fab:active {

@@ -122,8 +122,7 @@ export default function DashboardPage({ onNavigate }: DashboardPageProps = {}) {
         className="menu-btn-fab glass" 
         onClick={() => setIsMenuModalOpen(true)}
       >
-        <Menu size={20} />
-        <span>Меню</span>
+        <Menu size={24} />
       </button>
 
       {isMenuModalOpen && (
